@@ -7,7 +7,6 @@ concrete Eng of DCEC = open SyntaxEng, StructuralEng, ConstructorsEng, Paradigms
 	 Boolean = S;
 	 Moment = Tense;
 	 Fluent = Cl;
-
   lin
     
     -- Logic
@@ -18,15 +17,20 @@ concrete Eng of DCEC = open SyntaxEng, StructuralEng, ConstructorsEng, Paradigms
     -- Modalities
     P a t F  = (modal1 (mkV "see" "saw" "saw") a t F);    
 
-    K a t F  = (modal1 (mkV "know") a t F);
+    K a t F  = (modal1 (mkV "know" "know" "knew") a t F);
 
     B a t F  = (modal1 (mkV "believe") a t F);
     
     S1 a t F = (modal1 (mkV "declare") a t F);
 
-    D a t F  = (modal1 (mkV "desire") a t F);
-	
 
+    D a t F  = (modal1 (mkV "desire") a t F);
+     I1now a t1 Act  = (mkS t1 (mkCl a want_VV  (mkVP (mkVP Act) (ParadigmsEng.mkAdv "now"))));
+
+    I1later a t1 Act = (mkS t1 (mkCl a want_VV  
+				  (mkVP 
+				     (mkVP Act) 
+				     (ConstructorsEng.mkAdv (mkA "eventual")))));
 
     happens event moment = (mkS moment event);
 
@@ -55,10 +59,15 @@ concrete Eng of DCEC = open SyntaxEng, StructuralEng, ConstructorsEng, Paradigms
     -- Agents
     jack   = (mkNP (mkPN "Jack")) ;
     cogito = (mkNP (mkPN "Cogito"));
+    I = i_NP ;
+    he = he_NP;
+    she = she_NP;
+    you = you_NP;
 
     -- Unary ActionTypes
-    sleep1 = (mkV "sleep" "slept" "slept");
-
+    laugh = (mkV "laugh" "laughed" "laughed");
+    die = (mkV "die" "died" "died");
+    sleep = (mkV "sleep" "slept" "slept");
 
     -- Binary ActionTypes
     hurt2 a= {verb = (mkV2 (mkV "hurt" "hurt" "hurt")); arg = a};

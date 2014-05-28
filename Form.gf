@@ -1,14 +1,14 @@
-abstract DCEC = {
+concrete Form of DCEC = {
 
-  flags startcat = Boolean ;
+
 	
-  cat  Agent; ActionType1; ActionType2; Event; Moment; Boolean; Fluent;
+  lincat  Boolean = Str;
       
-  fun
+  lin
 
     -- Logic
-    and : Boolean -> Boolean -> Boolean; 
-    if : Boolean -> Boolean -> Boolean; 
+    and  x y = "(" ++ "and" ++ x ++ y ")"; 
+    if x y = "(" ++ "and" ++ x ++ y ")"; 
     or : Boolean -> Boolean -> Boolean; 
     
     -- Modalities
@@ -19,7 +19,6 @@ abstract DCEC = {
     D: Agent -> Moment -> Boolean -> Boolean;
     I1now: Agent -> Moment -> ActionType1 -> Boolean;
     I1later: Agent -> Moment -> ActionType1 -> Boolean;
-
     --I2: Agent -> Moment -> ActionType2 -> Moment -> Boolean;
     -- Event Calculus
     
@@ -35,12 +34,10 @@ abstract DCEC = {
     --- TODO: Modularize Specific Domains
     -- Agents, ActionTypes, Moments and Fluents
     --- Agents
-    I, he , she, you : Agent ;
     jack, cogito  : Agent ;
     
     --- ActionTypes
-    laugh, die, sleep  : ActionType1 ;
-   
+    sleep1 : ActionType1 ;
     hurt2, guard2 : Agent-> ActionType2;
     
     --- Moments

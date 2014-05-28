@@ -20,13 +20,14 @@ abstract DCEC = {
     I1: Agent -> Moment -> ActionType1 -> Moment -> Boolean;
     I2: Agent -> Moment -> ActionType2 -> Moment -> Boolean;
     -- Event Calculus
-    happens : Event -> Moment -> Boolean;
 
-    initially: Fluent -> Boolean;
 
     action1 : Agent -> ActionType1 -> Event ;
     action2 : Agent -> ActionType2 -> Event ;
-
+    
+    initially: Fluent -> Boolean;	
+    happens : Event -> Moment -> Boolean;
+    holds : Fluent -> Moment -> Boolean;
 
     --- *** Domain Specific ***
     --- TODO: Modularize Specific Domains

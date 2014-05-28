@@ -9,36 +9,32 @@ concrete Eng of DCEC = open SyntaxEng, StructuralEng, ConstructorsEng, Paradigms
 	 Fluent = Cl;
 
   lin
+    
     -- Logic
     and x y = (mkS and_Conj (mkListS x y));
     or x y = (mkS or_Conj (mkListS x y));
     if x y = (mkS if_then_Conj (mkListS x y));
 
     -- Modalities
-    P a t F  = (mkS t (mkCl a (mkVP 
-				 (mkVP (mkV "see"))
-				 (ConstructorsEng.mkAdv that_Subj F))));
-	
-    K a t F  = (mkS t (mkCl a (mkVP 
-				 (mkVP (mkV "know"))
-				 (ConstructorsEng.mkAdv that_Subj F))));
+    P a t F  = (modal1 (mkV "see" "saw" "saw") a t F);    
 
-    B a t F  = (mkS t (mkCl a (mkVP 
-				 (mkVP (mkV "believe"))
-				 (ConstructorsEng.mkAdv that_Subj F))));
+    K a t F  = (modal1 (mkV "know") a t F);
+
+    B a t F  = (modal1 (mkV "believe") a t F);
     
-    S1 a t F  = (mkS t (mkCl a (mkVP 
-				 (mkVP (mkV "declare"))
-				 (ConstructorsEng.mkAdv that_Subj F))));
+    S1 a t F = (modal1 (mkV "declare") a t F);
 
-    D a t F  = (mkS t (mkCl a (mkVP 
-				 (mkVP (mkV "desire"))
-				 (ConstructorsEng.mkAdv that_Subj F))));
+    D a t F  = (modal1 (mkV "desire") a t F);
 	
 
 
     happens event moment = (mkS moment event);
 
+    --EC Core
+     --action
+    action1 agent actiontype = (mkCl agent actiontype)  ;
+    action2 agent actiontype = (mkCl agent actiontype.verb actiontype.arg)  ;
+    
     -- initially
     --- mkCl:	SC -> VP -> Cl	
     initially fluent = (mkS presentTense
@@ -46,11 +42,12 @@ concrete Eng of DCEC = open SyntaxEng, StructuralEng, ConstructorsEng, Paradigms
 			     (mkVP 
 				(mkVP (mkV "hold")) 
 				(ConstructorsEng.mkAdv (mkA "initial")))));
+    --holds
+    holds fluent moment = (mkS moment fluent);
 
-     --action
-    action1 agent actiontype = (mkCl agent actiontype)  ;
-    action2 agent actiontype = (mkCl agent actiontype.verb actiontype.arg)  ;
-    
+    -- happens
+    happens event moment = (mkS moment event);
+
 
   --- *** Domain Specific ***
   --- TODO: Modularize Specific Domains  
@@ -81,5 +78,10 @@ concrete Eng of DCEC = open SyntaxEng, StructuralEng, ConstructorsEng, Paradigms
     happy agent = (mkCl agent (mkAP (mkA "happy"))) ;
     angry agent = (mkCl agent (mkAP (mkA "angry"))) ;
 	
+    oper
+      modal1 : V -> NP -> Tense -> S ->S =
+	\verb,a,t,F -> (mkS t (mkCl a (mkVP 
+					 (mkVP verb)
+					 (ConstructorsEng.mkAdv that_Subj F))));
     
 }

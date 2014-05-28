@@ -1,4 +1,5 @@
-concrete Eng of DCEC = open SyntaxEng, StructuralEng, ConstructorsEng, ParadigmsEng in {
+--# -path=.:.:alltenses
+concrete Eng of DCEC = open SyntaxEng, ConstructorsEng, ParadigmsEng in {
 
   lincat Agent = NP;
 	 ActionType1 = V;

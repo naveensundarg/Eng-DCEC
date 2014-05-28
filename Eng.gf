@@ -18,7 +18,7 @@ concrete Eng of DCEC = open SyntaxEng, ConstructorsEng, ParadigmsEng in {
     -- Modalities
     P a t F  = (modal1 (mkV "see" "saw" "saw") a t F);    
 
-    K a t F  = (modal1 (mkV "know" "know" "knew") a t F);
+    K a t F  = (modal1 (mkV "know" "knew" "knew") a t F);
 
     B a t F  = (modal1 (mkV "believe") a t F);
     
@@ -69,7 +69,7 @@ concrete Eng of DCEC = open SyntaxEng, ConstructorsEng, ParadigmsEng in {
     laugh = (mkV "laugh" "laughed" "laughed");
     die = (mkV "die" "died" "died");
     sleep = (mkV "sleep" "slept" "slept");
-
+    eat = (mkV "eat" "ate" "eaten");
     -- Binary ActionTypes
     hurt2 a= {verb = (mkV2 (mkV "hurt" "hurt" "hurt")); arg = a};
     guard2 a= {verb = (mkV2 (mkV "guard")); arg = a};

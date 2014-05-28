@@ -39,7 +39,7 @@ abstract DCEC = {
     jack, cogito  : Agent ;
     
     --- ActionTypes
-    laugh, die, sleep  : ActionType1 ;
+    laugh, die, sleep,eat  : ActionType1 ;
    
     hurt2, guard2 : Agent-> ActionType2;
     

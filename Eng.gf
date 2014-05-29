@@ -16,19 +16,19 @@ concrete Eng of DCEC = open SyntaxEng, ConstructorsEng, ParadigmsEng in {
     if x y = (mkS if_then_Conj (mkListS x y));
 
     -- Modalities
-    P a t F  = (modal1 (mkV "see" "saw" "saw") a t F);    
+    p a t F  = (modal1 (mkV "see" "saw" "saw") a t F);    
 
-    K a t F  = (modal1 (mkV "know" "knew" "knew") a t F);
+    k a t F  = (modal1 (mkV "know" "knew" "knew") a t F);
 
-    B a t F  = (modal1 (mkV "believe") a t F);
+    b a t F  = (modal1 (mkV "believe") a t F);
     
-    S1 a t F = (modal1 (mkV "declare") a t F);
+    s1 a t F = (modal1 (mkV "declare") a t F);
 
 
-    D a t F  = (modal1 (mkV "desire") a t F);
-     I1now a t1 Act  = (mkS t1 (mkCl a want_VV  (mkVP (mkVP Act) (ParadigmsEng.mkAdv "now"))));
+    d a t F  = (modal1 (mkV "desire") a t F);
+     i1now a t1 Act  = (mkS t1 (mkCl a want_VV  (mkVP (mkVP Act) (ParadigmsEng.mkAdv "now"))));
 
-    I1later a t1 Act = (mkS t1 (mkCl a want_VV  
+    i1later a t1 Act = (mkS t1 (mkCl a want_VV  
 				  (mkVP 
 				     (mkVP Act) 
 				     (ConstructorsEng.mkAdv (mkA "eventual")))));
@@ -60,7 +60,7 @@ concrete Eng of DCEC = open SyntaxEng, ConstructorsEng, ParadigmsEng in {
     -- Agents
     jack   = (mkNP (mkPN "Jack")) ;
     cogito = (mkNP (mkPN "Cogito"));
-    I = i_NP ;
+    i = i_NP ;
     he = he_NP;
     she = she_NP;
     you = you_NP;
@@ -73,6 +73,8 @@ concrete Eng of DCEC = open SyntaxEng, ConstructorsEng, ParadigmsEng in {
     -- Binary ActionTypes
     hurt2 a= {verb = (mkV2 (mkV "hurt" "hurt" "hurt")); arg = a};
     guard2 a= {verb = (mkV2 (mkV "guard")); arg = a};
+    harm2 a= {verb = (mkV2 (mkV "harm")); arg = a};
+    disable2 a= {verb = (mkV2 (mkV "disable")); arg = a};
 
     now = presentTense;
     tf = futureTense;

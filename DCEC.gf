@@ -12,13 +12,13 @@ abstract DCEC = {
     or : Boolean -> Boolean -> Boolean; 
     
     -- Modalities
-    P: Agent -> Moment -> Boolean -> Boolean;
-    K: Agent -> Moment -> Boolean -> Boolean;
-    B: Agent -> Moment -> Boolean -> Boolean;
-    S1: Agent -> Moment -> Boolean -> Boolean;
-    D: Agent -> Moment -> Boolean -> Boolean;
-    I1now: Agent -> Moment -> ActionType1 -> Boolean;
-    I1later: Agent -> Moment -> ActionType1 -> Boolean;
+    p: Agent -> Moment -> Boolean -> Boolean;
+    k: Agent -> Moment -> Boolean -> Boolean;
+    b: Agent -> Moment -> Boolean -> Boolean;
+    s1: Agent -> Moment -> Boolean -> Boolean;
+    d: Agent -> Moment -> Boolean -> Boolean;
+    i1now: Agent -> Moment -> ActionType1 -> Boolean;
+    i1later: Agent -> Moment -> ActionType1 -> Boolean;
 
     --I2: Agent -> Moment -> ActionType2 -> Moment -> Boolean;
     -- Event Calculus
@@ -35,13 +35,13 @@ abstract DCEC = {
     --- TODO: Modularize Specific Domains
     -- Agents, ActionTypes, Moments and Fluents
     --- Agents
-    I, he , she, you : Agent ;
+    i, he , she, you : Agent ;
     jack, cogito  : Agent ;
     
     --- ActionTypes
     laugh, die, sleep,eat  : ActionType1 ;
    
-    hurt2, guard2 : Agent-> ActionType2;
+    hurt2, guard2, harm2, disable2 : Agent-> ActionType2;
     
     --- Moments
     now,tf,tp: Moment;

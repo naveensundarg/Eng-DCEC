@@ -43,8 +43,50 @@
    </div>
    </div>    
 </div>
+
+<div tabindex="-1" class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+  <div class="modal-content">
+	<div class="modal-header">
+		<button class="close" type="button" data-dismiss="modal">×</button>
+		<h5 class="modal-title">Semantic Tree<small> [Abstract
+  from GF]</small></h5>
+	</div>
+	<div class="modal-body">
+		
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-default" data-dismiss="modal">Close</button>
+	</div>
+   </div>
+  </div>
+</div>
+
 <script>
-$("#input").keyup(function(e){
+
+function init(){
+  $(".thumbnail").on("click",showTree);
+}
+function showTree(){
+         
+  	$('.modal-body').empty();
+   	var title = $(this).parent('a').attr("title");
+  	$('.modal-title').html(title);
+  	$($(this).parents('div').html()).appendTo('.modal-body');
+  	$('#myModal').modal({show:true});
+      console.log("modal clicked");
+}
+
+function suggest(){
+   var url = "http://54.81.56.182:4242/query?q="+$("#input").val();
+
+   $.get(url, function(data) {
+   console.log( data);
+   $('#display').html(data);
+   init();
+   $('#display').slideDown();});
+}
+function handleSuggest (e){
 
     var code = (e.keyCode || e.which);
 
@@ -53,24 +95,16 @@ $("#input").keyup(function(e){
         return;
     }
 
-console.log( "Handler for .keypress() called." );
-var url = "http://127.0.0.1:4242/query?q="+$("#input").val();
-$.get(url, function(data) {
-console.log( data);
+   console.log( "Handler for .keypress() called." );
 
-$('#display').html(data);
-$('#display').slideDown();
-});
- 
+  suggest();
   
-});
-$(".thumbnail").click(function(){
-  	$('.modal-body').empty();
-  	var title = $(this).parent('a').attr("title");
-  	$('.modal-title').html(title);
-  	$($(this).parents('div').html()).appendTo('.modal-body');
-  	$('#myModal').modal({show:true});
-});
+}
+
+$("#input").keyup(suggest);
+
+suggest();
+
 </script>
 
 </body>

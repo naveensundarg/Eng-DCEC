@@ -1,0 +1,111 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+    <script src="./jquery-2.1.1.min.js"></script>
+
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+
+
+
+<div class="container-fluid">
+  <h3>DCEC* <small>data collection</small></h3>
+
+  <div class="row">
+    <div class="col-md-2 col-md-offset-4">
+        <h5>out <small>completions & parse trees</small></h5>
+    </div>
+    <div class="col-md-8 col-md-offset-2">
+       <div   class="well well-lg "id="display"></div>
+   </div>
+  </div>    
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="input-group input-group-lg">
+        <span class="input-group-addon">&#8866</span>
+        <input id="input" type="text" class="form-control" placeholder="text">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 col-md-offset-4">
+      <h5>out <small>completions & parse trees</small></h5>
+
+  </div>
+    <div class="col-md-8 col-md-offset-2">
+      <div   class="well well-lg "id="displayScore"> </div>
+      <div class="progress progress-striped active">
+  <div class="progress-bar progress-bar-warning" id="scorebar"  role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+    <span class="sr-only">45% Complete</span>
+  </div>
+</div>
+
+   </div>
+   </div>    
+</div>
+
+
+<script>
+var current="";
+
+
+function randomSemantic(){
+   var url = "http://127.0.0.1:4242/randomgf"
+
+   $.get(url, function(data) {
+   console.log( data);
+   current=data;
+   $('#display').html(data);
+   $('#display').slideDown();});
+}
+
+function computeScore(){
+   var url = "http://127.0.0.1:4242/computeScore?x="+$("#input").val()+"&y="+current;
+
+   $.get(url, function(data) {
+   console.log( data);
+   $('#displayScore').html(data);
+   $('#displayScore').slideDown();
+   $('#scorebar').prop("aria-valuenow",Math.max(100-parseInt(data),0));
+   $('#scorebar').prop("style","width:"+Math.max(100-parseInt(data),0)+"%");
+   scorebar.style.width=Math.max(100-parseInt(data),0)+"%";
+
+}
+);
+}
+function handleScoring (e){
+
+    var code = (e.keyCode || e.which);
+
+    // do nothing if it's an arrow key
+    if(code == 37 || code == 38 || code == 39 || code == 40) {
+        return;
+    }
+
+   console.log( "Handler for .keypress() called." );
+
+  computeScore();
+  
+}
+
+$("#input").keyup(computeScore);
+randomSemantic();
+
+
+</script>
+
+</body>
+</html>

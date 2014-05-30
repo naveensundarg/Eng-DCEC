@@ -10,7 +10,7 @@ abstract DCEC = {
     and : Boolean -> Boolean -> Boolean; 
     if : Boolean -> Boolean -> Boolean; 
     or : Boolean -> Boolean -> Boolean; 
-    
+    not: Boolean -> Boolean;
     -- Modalities
     p: Agent -> Moment -> Boolean -> Boolean;
     k: Agent -> Moment -> Boolean -> Boolean;
@@ -35,9 +35,10 @@ abstract DCEC = {
     --- TODO: Modularize Specific Domains
     -- Agents, ActionTypes, Moments and Fluents
     --- Agents
-    i, he , she, you : Agent ;
+    i, you : Agent ;
     jack, cogito  : Agent ;
-    
+    he , she : Agent -> Agent;
+
     --- ActionTypes
     laugh, die, sleep,eat  : ActionType1 ;
    

@@ -14,7 +14,7 @@ concrete Eng of DCEC = open SyntaxEng, ConstructorsEng, ParadigmsEng in {
     and x y = (mkS and_Conj (mkListS x y));
     or x y = (mkS or_Conj (mkListS x y));
     if x y = (mkS if_then_Conj (mkListS x y));
-
+    not x = (mkS  negativePol (mkCl (mkSC x) (mkVP (mkV "hold"))));
     -- Modalities
     p a t F  = (modal1 (mkV "see" "saw" "saw") a t F);    
 
@@ -61,8 +61,8 @@ concrete Eng of DCEC = open SyntaxEng, ConstructorsEng, ParadigmsEng in {
     jack   = (mkNP (mkPN "Jack")) ;
     cogito = (mkNP (mkPN "Cogito"));
     i = i_NP ;
-    he = he_NP;
-    she = she_NP;
+    he ref = he_NP;
+    she ref= she_NP;
     you = you_NP;
 
     -- Unary ActionTypes

@@ -5,16 +5,21 @@ concrete Eng of DCEC = open SyntaxEng, ConstructorsEng, ParadigmsEng in {
 	 ActionType1 = V;
 	 ActionType2 = {verb : V2; arg : NP};
 	 Event = Cl;
-	 Boolean = S;
+	 Boolean = {pol:Pol; tense: Tense; clause: Cl};
 	 Moment = Tense;
 	 Fluent = Cl;
+	 Utterance = S;
   lin
-    
+    --
+    reify b = (mkS b.tense b.pol b.clause);
+
+
     -- Logic
     and x y = (mkS and_Conj (mkListS x y));
     or x y = (mkS or_Conj (mkListS x y));
     if x y = (mkS if_then_Conj (mkListS x y));
-    not x = (mkS  negativePol (mkCl (mkSC x) (mkVP (mkV "hold"))));
+    not x = (bool x.tense  negativePol x.clause);
+    -- [Note: not is a bit different as it has to interact with the verb.]
     -- Modalities
     p a t F  = (modal1 (mkV "see" "saw" "saw") a t F);    
 
@@ -26,15 +31,16 @@ concrete Eng of DCEC = open SyntaxEng, ConstructorsEng, ParadigmsEng in {
 
 
     d a t F  = (modal1 (mkV "desire") a t F);
-     i1now a t1 Act  = (mkS t1 (mkCl a want_VV  (mkVP (mkVP Act) (ParadigmsEng.mkAdv "now"))));
+    
+    i1now a t1 Act  = (bool t1 positivePol
+			  (mkCl a want_VV  (mkVP (mkVP Act) (ParadigmsEng.mkAdv "now"))));
 
-    i1later a t1 Act = (mkS t1 (mkCl a want_VV  
+    i1later a t1 Act = (bool t1 positivePol (mkCl a want_VV  
 				  (mkVP 
 				     (mkVP Act) 
 				     (ConstructorsEng.mkAdv (mkA "eventual")))));
 
-    happens event moment = (mkS moment event);
-
+ 
     --EC Core
      --action
     action1 agent actiontype = (mkCl agent actiontype)  ;
@@ -42,16 +48,16 @@ concrete Eng of DCEC = open SyntaxEng, ConstructorsEng, ParadigmsEng in {
     
     -- initially
     --- mkCl:	SC -> VP -> Cl	
-    initially fluent = (mkS presentTense
+    initially fluent = (bool presentTense positivePol
 			  (mkCl (mkSC (mkS fluent)) 
 			     (mkVP 
 				(mkVP (mkV "hold")) 
 				(ConstructorsEng.mkAdv (mkA "initial")))));
     --holds
-    holds fluent moment = (mkS moment fluent);
+    holds fluent moment = (bool moment positivePol fluent);
 
     -- happens
-    happens event moment = (mkS moment event);
+    happens event moment = (bool moment positivePol event);
 
 
   --- *** Domain Specific ***
@@ -91,9 +97,17 @@ concrete Eng of DCEC = open SyntaxEng, ConstructorsEng, ParadigmsEng in {
     angry agent = (mkCl agent (mkAP (mkA "angry"))) ;
 	
     oper
-      modal1 : V -> NP -> Tense -> S ->S =
-	\verb,a,t,F -> (mkS t (mkCl a (mkVP 
-					 (mkVP verb)
-					 (ConstructorsEng.mkAdv that_Subj F))));
-    
+      modal1 : 
+	V -> NP -> Tense -> 
+	{pol:Pol; tense: Tense; clause: Cl} ->
+	{pol:Pol; tense: Tense; clause: Cl} 
+	=
+	\verb,a,t,F -> 
+	(bool t positivePol
+	   (mkCl a (mkVP 
+		      (mkVS verb)
+		      (reify F))));
+ 
+    bool: Tense -> Pol-> Cl-> {pol:Pol; tense: Tense; clause: Cl} =
+      \t, p,cl -> {tense=t; pol=p; clause = cl};
 }

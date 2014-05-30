@@ -1,16 +1,18 @@
 abstract DCEC = {
 
-  flags startcat = Boolean ;
+  flags startcat = Utterance ;
 	
-  cat  Agent; ActionType1; ActionType2; Event; Moment; Boolean; Fluent;
+  cat  Agent; ActionType1; ActionType2; Event; Moment; Boolean; Fluent;Utterance;
       
   fun
-
+    
+    -- Top 
+    reify : Boolean -> Utterance;
     -- Logic
-    and : Boolean -> Boolean -> Boolean; 
-    if : Boolean -> Boolean -> Boolean; 
-    or : Boolean -> Boolean -> Boolean; 
-    not: Boolean -> Boolean;
+     and : Utterance -> Utterance -> Utterance; 
+     if : Utterance -> Utterance -> Utterance; 
+     or : Utterance -> Utterance -> Utterance; 
+     not: Boolean -> Boolean;
     -- Modalities
     p: Agent -> Moment -> Boolean -> Boolean;
     k: Agent -> Moment -> Boolean -> Boolean;

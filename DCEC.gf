@@ -38,20 +38,11 @@ abstract DCEC = {
     -- Agents, ActionTypes, Moments and Fluents
     --- Agents
     i, you : Agent ;
-    jack, cogito  : Agent ;
     he , she : Agent -> Agent;
-
-    --- ActionTypes
-    laugh, die, sleep,eat  : ActionType1 ;
-   
-    hurt2, guard2, harm2, disable2 : Agent-> ActionType2;
-    
     --- Moments
     now,tf,tp: Moment;
     
-    --- Fluents
-    raining, snowing : Fluent;
-    hungry,tired, sick,sad,happy,angry: Agent->Fluent;
+
     
    }
       

@@ -3,8 +3,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
- 
-    <script src="./jquery-2.1.1.min.js"></script>
+
+     <script src="./jquery-2.1.1.min.js"></script>
 
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
@@ -61,8 +61,16 @@
    </div>
   </div>
 </div>
+<div class="navbar navbar-fixed-bottom "><div  id="alertBar" class="alert alert-info alert-dismissable">
+  <button type="button" class="close"data-dismiss="alert" aria-hidden="true">&times;</button>
+   <small class="text-center">Type in sentences and check for completions
+	and parses. 
+</small> 
+</div>
+</div>
 
 <script>
+$("#alertBar").hide(0);
 
 function init(){
   $(".thumbnail").on("click",showTree);
@@ -78,7 +86,7 @@ function showTree(){
 }
 
 function suggest(){
-   var url = "http://127.0.0.1:4242/query?q="+$("#input").val();
+   var url = "/query?q="+$("#input").val();
 
    $.get(url, function(data) {
    console.log( data);
@@ -102,6 +110,7 @@ function handleSuggest (e){
 }
 
 $("#input").keyup(suggest);
+$("#alertBar").slideDown();
 
 suggest();
 

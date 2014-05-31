@@ -1,5 +1,11 @@
 (in-package :eng-dcec)
 
+
+(defun remap-symbols (sym)
+  (optima:match sym 
+    (_ sym)))
+
+
 (defun parse (str)
   (let* ((uri (concatenate 'string *gf-server-url*
                            "parse&input="
@@ -11,10 +17,11 @@
     (setf (flexi-streams:flexi-stream-external-format stream) :utf-8)
     (let ((obj (first (yason:parse stream))))
       (close stream)
-      (mapcar (lambda (x)
-                (read-from-string
-                 (concatenate 'string "(" x ")"))) 
-              (gethash "trees" obj)))))
+       (mapcar (lambda (x)
+;                 (postprocess-tree) 
+                 (read-from-string
+                  (concatenate 'string "(" x ")"))) 
+               (gethash "trees" obj)))))
 
 
 

@@ -1,6 +1,8 @@
 
 (defparameter *ql-modules*
   (list "drakma"
+        "optima"
+        "cl-fad"
         "yason"
         "cl-ppcre"
         "hunchentoot"
@@ -8,7 +10,7 @@
 
 
 
-(mapcar #'ql:quickload *ql-modules*)
+(mapcar #'quicklisp:quickload *ql-modules*)
 (defparameter *reports* ())
 
 

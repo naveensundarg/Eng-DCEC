@@ -1,4 +1,3 @@
 (in-package :eng-dcec)
-
-(defparameter *gf-server-url* "http://127.0.0.1:41296/DCEC.pgf?command=")
-(defparameter *core-dir* #p"/Users/naveen/work/Eng-DCEC/")
+(defparameter *gf-server-url* "http://54.81.56.182:41296/DCECExt.pgf?command=")
+(defparameter *core-dir* (make-pathname  :directory (pathname-directory *load-truename*)))

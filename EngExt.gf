@@ -3,8 +3,8 @@ concrete EngExt of DCECExt = Eng ** open  SyntaxEng, ConstructorsEng, ParadigmsE
       --- *** Domain Specific ***
     lin
     
-    jack   = (mkNP (mkPN "Jack")) ;
-    cogito = (mkNP (mkPN "Cogito"));
+    jack   = {descr = (mkNP (mkN "named Jack")); name = (mkNP (mkN "Jack")) } ;
+    cogito = {descr = (mkNP (mkN "named Cogito")); name = (mkNP (mkN "Cogito")) };
 
     -- Unary ActionTypes
     laugh = (mkV "laugh" "laughed" "laughed");
@@ -12,19 +12,19 @@ concrete EngExt of DCECExt = Eng ** open  SyntaxEng, ConstructorsEng, ParadigmsE
     sleep = (mkV "sleep" "slept" "slept");
     eat = (mkV "eat" "ate" "eaten");
     -- Binary ActionTypes
-    hurt2 a= {verb = (mkV2 (mkV "hurt" "hurt" "hurt")); arg = a};
-    guard2 a= {verb = (mkV2 (mkV "guard")); arg = a};
-    harm2 a= {verb = (mkV2 (mkV "harm")); arg = a};
-    disable2 a= {verb = (mkV2 (mkV "disable")); arg = a};
+    hurt2 a= {verb = (mkV2 (mkV "hurt" "hurt" "hurt")); arg = a.name};
+    guard2 a= {verb = (mkV2 (mkV "guard")); arg =  a.name};
+    harm2 a= {verb = (mkV2 (mkV "harm")); arg =  a.name};
+    disable2 a= {verb = (mkV2 (mkV "disable")); arg =  a.name};
 
     
     raining = (mkCl (mkVP (mkV "rain")));
     snowing = (mkCl (mkVP (mkV "snow")));
 
-    hungry agent = (mkCl agent (mkAP (mkA "hungry"))) ;
-    tired agent = (mkCl agent (mkAP (mkA "tired"))) ;
-    sick agent = (mkCl agent (mkAP (mkA "sick"))) ;
-    sad agent = (mkCl agent (mkAP (mkA "sad"))) ;
-    happy agent = (mkCl agent (mkAP (mkA "happy"))) ;
-    angry agent = (mkCl agent (mkAP (mkA "angry"))) ;
+    hungry agent = (mkCl agent.name  (mkAP (mkA "hungry"))) ;
+    tired agent = (mkCl agent.name  (mkAP (mkA "tired"))) ;
+    sick agent = (mkCl agent.name  (mkAP (mkA "sick"))) ;
+    sad agent = (mkCl agent.name  (mkAP (mkA "sad"))) ;
+    happy agent = (mkCl agent.name  (mkAP (mkA "happy"))) ;
+    angry agent = (mkCl agent.name (mkAP (mkA "angry"))) ;
 }

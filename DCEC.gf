@@ -30,6 +30,8 @@ abstract DCEC = {
     action1 : Agent -> ActionType1 -> Event ;
     action2 : Agent -> ActionType2 -> Event ;
     
+    action1c : Agent -> ActionType1 -> Event ;
+    action2c : Agent -> ActionType2 -> Event ;
     initially: Fluent -> Boolean;	
     happens : Event -> Moment -> Boolean;
     holds : Fluent -> Moment -> Boolean;

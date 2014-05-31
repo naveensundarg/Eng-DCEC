@@ -89,4 +89,21 @@
 (defun +s (strings)
   (reduce (lambda (x y) (concatenate 'string x y)) strings :initial-value ""))
 
+(defparameter *var-counter* 0)
+(defun genvar ()
+  (intern (concatenate 'string "X" (princ-to-string (incf *var-counter*)))))
 
+
+(defun expand-tree (x)
+  (let ((*var-counter* 0))
+    (expand-tree-int x)))
+(defun expand-tree-int (x)
+  (optima:match x
+    ((list 'happens (list (or 'action1c 'action2c) ag act) time)
+     (let ((v (genvar)))
+       `(and (happens (action ,ag ,act) ,time) 
+             (exists (,v ?) 
+                     (happens (action ,ag ,act) ,v))
+             (< ,time ,v))))
+    ((cons head args) (cons head (mapcar #'expand-tree-int args)))
+    (_ x)))

@@ -11,6 +11,9 @@ concrete Eng of DCEC = open SyntaxEng, ConstructorsEng, ParadigmsEng in {
 	 Utterance = S;
 	 Dom= CN;
 	 [Agent] = NP;
+
+  printname fun action1,action2,action1c,action2c = "action";
+
   lin
     --
     s b = (mkS b.tense b.pol b.clause);
@@ -47,9 +50,13 @@ concrete Eng of DCEC = open SyntaxEng, ConstructorsEng, ParadigmsEng in {
  
     --EC Core
      --action
-    action1 agent actiontype = (mkCl agent.name (progressiveVP (mkVP actiontype)))  ;
+    action1 agent actiontype = (mkCl agent.name actiontype)  ;
     action2 agent actiontype = (mkCl agent.name actiontype.verb actiontype.arg)  ;
-    
+
+    action1c agent actiontype = (mkCl agent.name (progressiveVP (mkVP actiontype)))  ;
+    action2c agent actiontype = (mkCl agent.name  (progressiveVP 
+						     (mkVP actiontype.verb actiontype.arg)));
+
     -- initially
     --- mkCl:	SC -> VP -> Cl	
     initially fluent = (bool presentTense positivePol

@@ -4,21 +4,27 @@
 
 (in-package :eng-dcec)
 
+(defun rplcr (pat  with)
+  (lambda (x) (cl-ppcre:regex-replace-all pat x with)))
 (defun process-logic-form (x)
   (pipeline 
    x
-   (lambda (x) (cl-ppcre:regex-replace-all "\\(and " x "(&and; "))
-   (lambda (x) (cl-ppcre:regex-replace-all "\\(if " x "(&or; "))
-   (lambda (x) (cl-ppcre:regex-replace-all "\\(or " x "(&rArr; "))
-   (lambda (x) (cl-ppcre:regex-replace-all "\\(k " x "(<b>K </b> "))
-   (lambda (x) (cl-ppcre:regex-replace-all "\\(s " x "(<b>S </b> "))
-   (lambda (x) (cl-ppcre:regex-replace-all "\\(p " x "(<b>P </b> "))
-   (lambda (x) (cl-ppcre:regex-replace-all "\\(b " x "(<b>B </b> "))
-   (lambda (x) (cl-ppcre:regex-replace-all "(\\b)+i(\\b)+" x " <b>I</b> "))
-   (lambda (x) (cl-ppcre:regex-replace-all "(\\b)+tp(\\b)+" x " t<sub><b>p</b></sub>"))
-   (lambda (x) (cl-ppcre:regex-replace-all "(\\b)+tf(\\b)+" x "
-  t<sub><b>f</b></sub>"))
-   (lambda (x) (cl-ppcre:regex-replace-all "\\?[\\w]+" x "?"))))
+    (rplcr "\\(and " "(&and; ")
+    (rplcr "\\(if "  "(&or; ")
+    (rplcr "\\(or "  "(&rArr; ")
+    (rplcr "\\(k "  "(<b>K </b> ")
+    (rplcr "\\(s "  "(<b>S </b> ")
+    (rplcr "\\(p "  "(<b>P </b> ")
+    (rplcr "\\(b " "(<b>B </b> ")
+    (rplcr "(\\b)+i(\\b)+"  " <b>I</b> ")
+    (rplcr "(\\b)+tp(\\b)+"  " t<sub><b>p</b></sub>")
+    (rplcr "(\\b)+tf(\\b)+"  "  t<sub><b>f</b></sub>")
+    (rplcr "\\?[\\w]+"  "?")
+    (rplcr "\\?[\\w]+"  "?")
+    (rplcr "action1"  "action")
+    (rplcr "action2"  "action")
+    (rplcr "action1c"  "action")
+    (rplcr "action2c"  "action")))
 
 (defparameter *success-message* "<br/><span class='label label-success'>Parsed</span>")
 (defparameter *incomplete-message* "<br/><span class='label label-warning'>incomplete</span>")
@@ -55,13 +61,14 @@ label-default'>waiting</span>")
                   img-ptr "'"
                   ">")))
     (concatenate 'string 
-                 "<div class='row'> <div class='col-xs-6 col-md-3 col-md-offset-5'> <a href='"
+                 "<div class='row'> <div class='col-xs-6 col-md-3
+  col-md-offset-5'>   </h5> <a href='"
                  "#" "' onclick= 'return showTree()'"
-                 "class='thumbnail'>" img-url "</a> </div></div>")))
+                 "class='thumbnail'>"  img-url "</a> </div></div>")))
 (defun pprint-trees (trees)
   (if (null trees) (list "")
       (let ((count 0))
-        (append (list (image-box trees) "<ul class='list-group'>")
+        (append (list (image-box trees) "<h4><small> semantic representations</small></h4><ul class='list-group'>")
                 (mapcar (lambda (x)  
                           (concatenate 'string
                                        "<li class='list-group-item'>"
@@ -70,7 +77,8 @@ label-default'>waiting</span>")
                                        "</span>"
                                        (process-logic-form 
                                         (string-downcase
-                                         (princ-to-string  (postprocess-tree x))))
+                                         (princ-to-string  (postprocess-tree 
+                                                            (expand-tree x)))))
                                        "</li>"))
                         trees)
                 (list "</ul>" )))))

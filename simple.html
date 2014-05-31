@@ -49,8 +49,7 @@
   <div class="modal-content">
 	<div class="modal-header">
 		<button class="close" type="button" data-dismiss="modal">×</button>
-		<h5 class="modal-title">Semantic Tree<small> [Abstract
-  from GF]</small></h5>
+		<h5 class="modal-title">Abstract Tree<small> [GF]</small></h5>
 	</div>
 	<div class="modal-body">
 		
@@ -64,7 +63,7 @@
 <div class="navbar navbar-fixed-bottom "><div  id="alertBar" class="alert alert-info alert-dismissable">
   <button type="button" class="close"data-dismiss="alert" aria-hidden="true">&times;</button>
    <small class="text-center">Type in sentences and check for completions
-	and parses. 
+	and parses. Contact: naveensundarg@gmail.com
 </small> 
 </div>
 </div>
@@ -80,7 +79,7 @@ function showTree(){
   	$('.modal-body').empty();
    	var title = $(this).parent('a').attr("title");
   	$('.modal-title').html(title);
-  	$($(this).parents('div').html()).appendTo('.modal-body');
+  	$($(this).html()).appendTo('.modal-body');
   	$('#myModal').modal({show:true});
       console.log("modal clicked");
 }
@@ -94,6 +93,7 @@ function suggest(){
    init();
    $('#display').slideDown();});
 }
+var cached = "";
 function handleSuggest (e){
 
     var code = (e.keyCode || e.which);
@@ -104,12 +104,13 @@ function handleSuggest (e){
     }
 
    console.log( "Handler for .keypress() called." );
-
-  suggest();
+   if($("#input").val()==cached) {return;}
+   suggest();
+   cached= $("#input").val();
   
 }
 
-$("#input").keyup(suggest);
+$("#input").keyup(handleSuggest);
 $("#alertBar").slideDown();
 
 suggest();

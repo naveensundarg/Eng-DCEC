@@ -4,8 +4,7 @@
 
 (in-package :eng-dcec)
 
-(defun rplcr (pat  with)
-  (lambda (x) (cl-ppcre:regex-replace-all pat x with)))
+
 (defun process-logic-form (x)
   (pipeline 
    x
@@ -57,7 +56,7 @@ label-default'>waiting</span>")
                                                  (first
                                                   trees))) :utf-8)))
         (img-url (concatenate 
-                  'string  "<img id='abstree' src='"
+                  'string  "<img class='img-responsive' id='abstree' src='"
                   img-ptr "'"
                   ">")))
     (concatenate 'string 
@@ -68,7 +67,7 @@ label-default'>waiting</span>")
 (defun pprint-trees (trees)
   (if (null trees) (list "")
       (let ((count 0))
-        (append (list (image-box trees) "<h4><small> semantic representations</small></h4><ul class='list-group'>")
+        (append (list (image-box trees) "<h4><small> DCEC semantic representations</small></h4><ul class='list-group'>")
                 (mapcar (lambda (x)  
                           (concatenate 'string
                                        "<li class='list-group-item'>"
@@ -78,7 +77,7 @@ label-default'>waiting</span>")
                                        (process-logic-form 
                                         (string-downcase
                                          (princ-to-string  (postprocess-tree 
-                                                            (expand-tree x)))))
+                                                            (transform-tree x)))))
                                        "</li>"))
                         trees)
                 (list "</ul>" )))))

@@ -18,8 +18,10 @@
   (list
    "packages"
    "configs"
+   "utils"
    "interface"
-   "www"))
+   "transform"
+   "www")) 
 
 (defun compile-and-load (pathname &key (verbose nil))
   (multiple-value-bind (output-pathname warnings-p failure-p)

@@ -1,7 +1,10 @@
 Eng-DCEC
 ========
 
-
+```DCEC.gf``` is the core abstract syntax. ```DCECExt.gf``` is an
+extension of the core abstract syntax with some verbs and
+agents. ```Eng.gf``` is the core concrete syntax, and ```EngExt.gf```
+is the concrete syntax extended.
 
 
 Setting up the web interface
@@ -25,4 +28,4 @@ gf -server --document-root=.
 ```
 
 (For your interface to be accessed remotely, edit
-```*gf-server-url*``` ```in configs.lisp``` to point to where the GF server is running. )
+```*gf-server-url*``` in ```configs.lisp``` to point to where the GF server is running. )

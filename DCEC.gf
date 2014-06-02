@@ -14,6 +14,7 @@ abstract DCEC = {
      or : Utterance -> Utterance -> Utterance; 
      not: Boolean -> Boolean;
      forall : Agent -> Dom -> Boolean -> Boolean;
+     all : Agent -> Dom -> Utterance -> Utterance;
       -- Modalities
     p: Agent -> Moment -> Utterance -> Boolean;
     k: Agent -> Moment -> Utterance -> Boolean;

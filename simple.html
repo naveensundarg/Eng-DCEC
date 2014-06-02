@@ -13,7 +13,10 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-
+   <style> .popover {
+	max-width: 800px;
+	width: auto;
+}</style>
 </head>
 <body>
 
@@ -68,11 +71,27 @@
 </div>
 </div>
 
+
+
 <script>
 $("#alertBar").hide(0);
+$('.results').tooltip()
+function attachPopover ()
+{
+  $('.results').popover(
+  {
+     trigger: 'hover',
+     html: true,
+     placement: 'top',
+         container: 'body',
+
+  });
+};
+
 
 function init(){
   $(".thumbnail").on("click",showTree);
+  attachPopover();
 }
 function showTree(){
          
@@ -82,6 +101,7 @@ function showTree(){
   	$($(this).html()).appendTo('.modal-body');
   	$('#myModal').modal({show:true});
       console.log("modal clicked");
+
 }
 
 function suggest(){
@@ -91,6 +111,7 @@ function suggest(){
    console.log( data);
    $('#display').html(data);
    init();
+   
    $('#display').slideDown();});
 }
 var cached = "";
@@ -105,6 +126,8 @@ function handleSuggest (e){
 
    console.log( "Handler for .keypress() called." );
    if($("#input").val()==cached) {return;}
+    $('[data-toggle="popover"]').popover('hide');
+
    suggest();
    cached= $("#input").val();
   

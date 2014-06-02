@@ -17,10 +17,11 @@
   (let ((obj (talk-to-gf-server 
                (+s "parse&input="
                    (cl-ppcre:regex-replace-all "\\s" str "%20")))))
-    (mapcar (lambda (x)
-              (read-from-string
-               (concatenate 'string "(" x ")"))) 
-            (gethash "trees" obj))))
+    (let ((*package* (find-package "ENG-DCEC"))) 
+      (mapcar (lambda (x)
+                (read-from-string
+                 (concatenate 'string "(" x ")"))) 
+              (gethash "trees" obj)))))
 
 (defun random-gf ()
   (let ((obj (talk-to-gf-server "random")))

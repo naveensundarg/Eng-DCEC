@@ -15,19 +15,20 @@
 
 (defun transform-tree-int (x)
   (optima:match x
+    ;; present continous
     ((list 'happens (list (or 'action1c 'action2c) ag act) 'now)
      (let ((v (genvar "T")))
        `(and (happens (action ,ag ,act) now) 
              (exists (,v ?) 
                      (happens (action ,ag ,act) ,v)
                      (< now ,v)))))
-    ;; tp
+    ;; simple past
     ((list 'happens (list (or 'action1 'action2) ag act) 'tp)
      (let ((v (genvar "TP")))
        `(exists (,v ?)
          (and (happens (action ,ag ,act) ,v) 
               (< ,v now)))))
-    ;; tf
+    ;; simple future
     ((list 'happens (list (or 'action1 'action2) ag act) 'tf)
      (let ((v (genvar "TF")))
        `(exists (,v ?)
@@ -35,7 +36,7 @@
               (<  now ,v)))))
     ((list 'S F) (transform-tree-int F))
     ((cons head args) (cons head (mapcar #'transform-tree-int args)))
-    (_ x)))
+    (_ (values x (symbol-package x)))))
 
 (defun transform-tree (x)
   (let ((*name-counts* (make-hash-table :test #'equalp)))

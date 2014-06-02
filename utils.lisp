@@ -18,3 +18,12 @@
 (defun remap-symbols (sym)
   (optima:match sym 
     (_ sym)))
+
+
+;;; may not always work. 
+;;; configuring for lazy academics!
+(defun get-ip ()
+  (format t "~{~a~^.~}" 
+          (coerce 
+           (ip-interfaces:ip-interface-address 
+            (second (ip-interfaces:get-ip-interfaces))) 'list )))

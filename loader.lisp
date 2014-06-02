@@ -1,6 +1,7 @@
 
 (defparameter *ql-modules*
   (list "drakma"
+        "ip-interfaces"
         "optima"
         "cl-fad"
         "yason"

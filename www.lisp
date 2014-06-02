@@ -8,22 +8,25 @@
 (defun process-logic-form (x)
   (pipeline 
    x
-    (rplcr "\\(and " "(&and; ")
-    (rplcr "\\(if "  "(&or; ")
-    (rplcr "\\(or "  "(&rArr; ")
-    (rplcr "\\(k "  "(<b>K </b> ")
-    (rplcr "\\(s "  "(<b>S </b> ")
-    (rplcr "\\(p "  "(<b>P </b> ")
-    (rplcr "\\(b " "(<b>B </b> ")
-    (rplcr "(\\b)+i(\\b)+"  " <b>I</b> ")
-    (rplcr "(\\b)+tp(\\b)+"  " t<sub><b>p</b></sub>")
-    (rplcr "(\\b)+tf(\\b)+"  "  t<sub><b>f</b></sub>")
-    (rplcr "\\?[\\w]+"  "?")
-    (rplcr "\\?[\\w]+"  "?")
-    (rplcr "action1"  "action")
-    (rplcr "action2"  "action")
-    (rplcr "action1c"  "action")
-    (rplcr "action2c"  "action")))
+   (rplcr "\\(all " "(&#8704; ")
+   (rplcr "\\(forall " "(&#8704; ")
+   (rplcr "\\(exists " "(&#8707; ")
+   (rplcr "\\(and " "(&and; ")
+   (rplcr "\\(if "  "(&or; ")
+   (rplcr "\\(or "  "(&rArr; ")
+   (rplcr "\\(k "  "(<b>K </b> ")
+   (rplcr "\\(s "  "(<b>S </b> ")
+   (rplcr "\\(p "  "(<b>P </b> ")
+   (rplcr "\\(b " "(<b>B </b> ")
+   (rplcr "(\\b)+i(\\b)+"  " <b>I</b> ")
+   (rplcr "(\\b)+tp(\\b)+"  " t<sub><b>p</b></sub>")
+   (rplcr "(\\b)+tf(\\b)+"  "  t<sub><b>f</b></sub>")
+   (rplcr "\\?[\\w]+"  "?")
+   (rplcr "\\?[\\w]+"  "?")
+   (rplcr "action1"  "action")
+   (rplcr "action2"  "action")
+   (rplcr "action1c"  "action")
+   (rplcr "action2c"  "action")))
 
 (defparameter *success-message* "<br/><span class='label label-success'>Parsed</span>")
 (defparameter *incomplete-message* "<br/><span class='label label-warning'>incomplete</span>")
@@ -53,8 +56,7 @@ label-default'>waiting</span>")
                               "abstrtree&tree=" 
                               (drakma:url-encode 
                                (string-downcase (princ-to-string
-                                                 (first
-                                                  trees))) :utf-8)))
+                                                 (first trees))) :utf-8)))
         (img-url (concatenate 
                   'string  "<img class='img-responsive' id='abstree' src='"
                   img-ptr "'"
@@ -64,21 +66,31 @@ label-default'>waiting</span>")
   col-md-offset-5'>   </h5> <a href='"
                  "#" "' onclick= 'return showTree()'"
                  "class='thumbnail'>"  img-url "</a> </div></div>")))
+
+(defun get-tree-for-display (x)
+  (+s "<div   class='results' title='DCEC' data-container='body' data-toggle='popover' data-placement='left' data-content='"
+   (process-logic-form 
+    (string-downcase
+     (princ-to-string  (postprocess-tree 
+                        (transform-tree x)))))
+   "'> " (process-logic-form 
+          (string-downcase (princ-to-string (postprocess-tree x))))"</div>"))
 (defun pprint-trees (trees)
   (if (null trees) (list "")
       (let ((count 0))
-        (append (list (image-box trees) "<h4><small> DCEC semantic representations</small></h4><ul class='list-group'>")
-                (mapcar (lambda (x)  
-                          (concatenate 'string
-                                       "<li class='list-group-item'>"
-                                       "<span class='badge'>"   
-                                       (princ-to-string (incf count)) 
-                                       "</span>"
-                                       (process-logic-form 
-                                        (string-downcase
-                                         (princ-to-string  (postprocess-tree 
-                                                            (transform-tree x)))))
-                                       "</li>"))
+        (append (list 
+                 (image-box trees) 
+                 "<h4><small> Abstract DCEC semantic representations (mouse
+  over for deeper representation)</small></h4><ul class='list-group'>")
+                (mapcar 
+                 (lambda (x)  
+                   (+s
+                    "<li class='list-group-item'>"
+                    "<span class='badge'>"   
+                    (princ-to-string (incf count)) 
+                    "</span>"
+                    (get-tree-for-display x)
+                    "</li>"))
                         trees)
                 (list "</ul>" )))))
 
@@ -145,5 +157,11 @@ label-default'>waiting</span>")
  hunchentoot:*dispatch-table*)
 
 
+(defparameter *server* nil)
 (defun start-www (&optional (port 4242))
-  (hunchentoot:start (make-instance 'hunchentoot:easy-acceptor :port port)))
+  (setf *server* (hunchentoot:start (make-instance 'hunchentoot:easy-acceptor
+                                                   :port port))))
+(defun stop-www () 
+  (if *server*
+      (progn (hunchentoot:stop *server* :soft nil)
+             (setf *server* nil))))

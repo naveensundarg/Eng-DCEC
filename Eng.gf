@@ -10,7 +10,6 @@ concrete Eng of DCEC = open SyntaxEng, ConstructorsEng, ParadigmsEng in {
 	 Fluent = Cl;
 	 Utterance = S;
 	 Dom= CN;
-	 [Agent] = NP;
 
   printname fun action1,action2,action1c,action2c = "action";
 
@@ -24,7 +23,7 @@ concrete Eng of DCEC = open SyntaxEng, ConstructorsEng, ParadigmsEng in {
     if x y = (mkS if_then_Conj (mkListS x y));
     not x = (bool x.tense  negativePol x.clause);
     forall xs A B = (bool presentTense positivePol (mkCl (ConstructorsEng.mkAdv for_Prep (mkNP all_Predet (mkNP a_Quant plNum (mkCN A xs.descr)))) (s B)));
- 	
+    all xs A  B=  (mkS (ConstructorsEng.mkAdv for_Prep (mkNP all_Predet (mkNP a_Quant plNum (mkCN A xs.descr)))) B);
 	      -- every one 
     -- [Note: not is a bit different as it has to interact with the verb.]
     -- Modalities

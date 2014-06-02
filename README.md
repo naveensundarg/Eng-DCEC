@@ -24,8 +24,7 @@ Setting up the web interface
 
 1. Download or clone the repository
 
-2. Spin up the GF server:
-```bash
+2. Spin up the GF server:```bash
 cd Eng-DCEC/gf
 gf -make EngExt.gf
 gf -server --document-root=.

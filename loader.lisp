@@ -4,6 +4,7 @@
         "ip-interfaces"
         "optima"
         "cl-fad"
+        "trivial-shell"
         "yason"
         "cl-ppcre"
         "hunchentoot"
@@ -17,12 +18,12 @@
 
 (defparameter *files*
   (list
-   "packages"
+   "./lisp/packages"
    "configs"
-   "utils"
-   "interface"
-   "transform"
-   "www")) 
+   "./lisp/utils"
+   "./lisp/interface"
+   "./lisp/transform"
+   "./lisp/www")) 
 
 (defun compile-and-load (pathname &key (verbose nil))
   (multiple-value-bind (output-pathname warnings-p failure-p)

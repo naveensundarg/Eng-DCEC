@@ -1,3 +1,12 @@
+Prerequisites
+=============
+
+* SBCL or Lispworks
+* Quicklisp
+* GF
+
+-------------------------------------------------------------------------------
+
 Eng-DCEC
 ========
 
@@ -6,9 +15,12 @@ extension of the core abstract syntax with some verbs and
 agents. ```Eng.gf``` is the core concrete syntax, and ```EngExt.gf```
 is the concrete syntax extended.
 
+-------------------------------------------------------------------------------
 
 Setting up the web interface
 ========
+
+
 
 1. Download or clone the repository
 

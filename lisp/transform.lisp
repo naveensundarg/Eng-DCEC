@@ -13,8 +13,17 @@
                        (princ-to-string (get-next-count *name-counts* root)))))
 
 
+(Defun pre-transform (x)
+  (optima:match x ((list 'S F) (pre-transform F))
+                ((cons _ _) (mapcar #'pre-transform x))
+                (_ x)))
 (defun transform-tree-int (x)
   (optima:match x
+    ((list 'and_seq
+           (list (or 'happens 'holds) _ t1)
+           (list (or 'happens 'holds) _ t2))
+     (if (not (equalp t1 t2))
+         `(and ,@(rest x) (< x1 x2))))
     ;; present continous
     ((list 'happens (list (or 'action1c 'action2c) ag act) 'now)
      (let ((v (genvar "T")))
@@ -34,7 +43,6 @@
        `(exists (,v ?)
          (and (happens (action ,ag ,act) ,v) 
               (<  now ,v)))))
-    ((list 'S F) (transform-tree-int F))
     ((cons head args) (cons head (mapcar #'transform-tree-int args)))
     (_ (values x (symbol-package x)))))
 

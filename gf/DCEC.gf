@@ -10,6 +10,7 @@ abstract DCEC = {
     s : Boolean -> Utterance;
     -- Logic
      and : Utterance -> Utterance -> Utterance; 
+     and_seq: Utterance -> Utterance -> Utterance;
      if : Utterance -> Utterance -> Utterance; 
      or : Utterance -> Utterance -> Utterance; 
      not: Boolean -> Boolean;

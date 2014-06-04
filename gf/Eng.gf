@@ -19,6 +19,7 @@ concrete Eng of DCEC = open SyntaxEng, ConstructorsEng, ParadigmsEng in {
 
     -- Logic
     and x y = (mkS and_Conj (mkListS x y));
+    and_seq x y = (mkS and_Conj (mkListS x (mkS (mkAdv  "then") y)));
     or x y = (mkS or_Conj (mkListS x y));
     if x y = (mkS if_then_Conj (mkListS x y));
     not x = (bool x.tense  negativePol x.clause);

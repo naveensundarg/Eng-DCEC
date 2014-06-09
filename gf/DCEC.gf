@@ -2,7 +2,7 @@ abstract DCEC =  {
 
   flags startcat = Utterance ;
 	
-  cat  Agent; ActionType1; ActionType2; ActionType3; Event; Moment; Boolean; Fluent;Utterance;
+  cat  Agent; ActionType; Event; Moment; Boolean; Fluent;Utterance;
          Dom; 
   fun
     
@@ -22,19 +22,11 @@ abstract DCEC =  {
     b: Agent -> Moment -> Utterance -> Boolean;
     s1: Agent -> Moment -> Utterance -> Boolean;
     d: Agent -> Moment -> Utterance -> Boolean;
-    i1now: Agent -> Moment -> ActionType1 -> Boolean;
-    i1later: Agent -> Moment -> ActionType1 -> Boolean;
-    i2now: Agent -> Moment -> ActionType2 -> Boolean;
-    i2later: Agent -> Moment -> ActionType2 -> Boolean;
+    inow: Agent -> Moment -> ActionType -> Boolean;
+    ilater: Agent -> Moment -> ActionType -> Boolean;
 
-    --I2: Agent -> Moment -> ActionType2 -> Moment -> Boolean;
     -- Event Calculus
-    action1 : Agent -> ActionType1 -> Event ;
-    action2 : Agent -> ActionType2 -> Event ;
-    action2I : Agent -> ActionType2 -> Event; --reflexive version
-    action3 : Agent -> ActionType3 -> Event ;
-    action3I : Agent -> ActionType3 -> Event ; --reflexive version
-
+    action : Agent -> ActionType-> Event ;
     
     initially: Fluent -> Boolean;	
     happens : Event -> Moment -> Boolean;

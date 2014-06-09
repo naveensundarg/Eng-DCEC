@@ -6,11 +6,11 @@ abstract DCECExt = DCEC  ** {
     jack, cogito, robot1, robot2, robot3, robot_n, robot_s  : Agent ;
 
     --- ActionTypes
-    laugh, sleep, eat, die  : ActionType1 ;
+    laugh, sleep, run, eat, die  : ActionType;
    
-    hurt2, guard2, harm2, disable2, destroy2, shoot2, injure2 : Agent-> ActionType2;
+    hurt, guard, harm, disable, destroy, shoot, injure : Agent-> ActionType;
 
-    refrain3 :  ActionType2-> Agent->ActionType3;
+--    refrain3 :  ActionType2-> Agent->ActionType3;
 
     
     --- Fluents

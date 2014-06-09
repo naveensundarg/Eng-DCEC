@@ -2,9 +2,7 @@
 concrete Eng of DCEC =  open SyntaxEng, ConstructorsEng, ParadigmsEng in {
 
   lincat Agent ={descr:NP; name: NP};
-	 ActionType1 = V; -- X laughs
-	 ActionType2 = {verb : V2; arg : NP}; -- X likes Y
-	 ActionType3 = {verb1 : V2;  verb2: V2;  arg : NP}; -- X refrains from harming Y
+	 ActionType=VP;
 	 Event = Cl;
 	 Boolean = {pol:Pol; anteriority:Ant; tense: Tense; clause: Cl};
 	 Moment = Tense;
@@ -12,7 +10,6 @@ concrete Eng of DCEC =  open SyntaxEng, ConstructorsEng, ParadigmsEng in {
 	 Utterance = S;
 	 Dom= CN;
 
-  printname fun action1,action2,action1c,action2c = "action";
 
   lin
     --
@@ -42,26 +39,18 @@ concrete Eng of DCEC =  open SyntaxEng, ConstructorsEng, ParadigmsEng in {
 
     d a t F  = (modal1 (mkV "desire") a t F);
     
-    i1now a t Act  = (intends a  t simultaneousAnt (mkVP Act)(ParadigmsEng.mkAdv "now"));
+    inow a t Act  = (intends a  t simultaneousAnt Act (ParadigmsEng.mkAdv "now"));
 
-    i1later a t Act = (intends a  t simultaneousAnt (mkVP Act)(ConstructorsEng.mkAdv (mkA "eventual")));
+    ilater a t Act = (intends a  t simultaneousAnt Act (ConstructorsEng.mkAdv (mkA "eventual")));
     
-    i2now a t Act  = (intends a  t simultaneousAnt (mkVP Act.verb Act.arg) (ParadigmsEng.mkAdv "now"));
-
-    i2later a t Act = (intends a  t simultaneousAnt (mkVP Act.verb Act.arg) (ConstructorsEng.mkAdv (mkA "eventual")));
-
  
     --EC Core
      --action
-    action1 agent actiontype = (mkCl agent.name actiontype)  ;
-    action2 agent actiontype = (mkCl agent.name actiontype.verb actiontype.arg)  ;
-    action2I agent actiontype = (mkCl agent.name (reflexiveVP actiontype.verb))  ;
-    action3 agent actiontype = (mkCl agent.name actiontype.verb1  (mkNP actiontype.arg actiontype.verb2 ));
- --   action3I agent actiontype = (mkCl agent.name (reflexiveVP actiontype.verb1) (mkVP actiontype.verb2 actiontype.arg2))  ;
+    action agent actiontype = (mkCl agent.name actiontype)  ;
 
-    action1c agent actiontype = (mkCl agent.name (progressiveVP (mkVP actiontype)))  ;
-    action2c agent actiontype = (mkCl agent.name  (progressiveVP 
-						     (mkVP actiontype.verb actiontype.arg)));
+    --action2I agent actiontype = (mkCl agent.name (reflexiveVP actiontype.verb))  ;
+  --  action3 agent actiontype = (mkCl agent.name actiontype.verb1  (mkNP actiontype.arg actiontype.verb2 ));
+ --   action3I agent actiontype = (mkCl agent.name (reflexiveVP actiontype.verb1) (mkVP actiontype.verb2 actiontype.arg2))  ;
 
 
     -- initially
@@ -76,7 +65,7 @@ concrete Eng of DCEC =  open SyntaxEng, ConstructorsEng, ParadigmsEng in {
 
     -- happens
     happens event moment = (bool moment simultaneousAnt positivePol event);
-   happensp event moment = (bool moment anteriorAnt positivePol event);
+    happensp event moment = (bool moment anteriorAnt positivePol event);
 
 
 

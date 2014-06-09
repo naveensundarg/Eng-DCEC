@@ -2,6 +2,8 @@ concrete EngExt of DCECExt = Eng ** open  SyntaxEng, ConstructorsEng, ParadigmsE
 
       --- *** Domain Specific ***
     lin
+
+    -- Agents and their descriptions
     
     jack   = {descr = (mkNP (mkN human (mkN "named Jack"))); name = (mkNP (mkN human (mkN "Jack"))) } ;
     cogito = {descr = (mkNP (mkN "named Cogito")); name = (mkNP (mkN "Cogito")) };
@@ -16,40 +18,50 @@ concrete EngExt of DCECExt = Eng ** open  SyntaxEng, ConstructorsEng, ParadigmsE
 
 
 
-
     -- Unary ActionTypes
-    laugh = (mkV "laugh" "laughed" "laughed");
-    sleep = (mkV "sleep" "slept" "slept");
-    eat = (mkV "eat" "ate" "eaten");
-   -- die= die_V;
-    -- Binary ActionTypes
-    hurt2 a= {verb = (mkV2 (mkV "hurt" "hurt" "hurt")); arg = a.name};
-    guard2 a= {verb = (mkV2 (mkV "guard")); arg =  a.name};
-    harm2 a= {verb = (mkV2 (mkV "harm")); arg =  a.name};
-    disable2 a= {verb = (mkV2 (mkV "disable")); arg =  a.name};
-    destroy2 a= {verb = (mkV2 (mkV "destroy")); arg =  a.name};
-    injure2 a= {verb = (mkV2 (mkV "injure")); arg =  a.name};
+    laugh = (unaryAction (mkV "laugh" "laughed" "laughed"));
+    sleep = (unaryAction (mkV "sleep" "slept" "slept"));
+    eat = (unaryAction (mkV "eat" "ate" "eaten"));
+    run = (unaryAction (mkV "run" "ran" "run"));
 
-    shoot2 a= {verb = (mkV2 (mkV "shoot" "shot" "shot")); arg =  a.name};
+    -- Binary ActionTypes
+    hurt a= (binaryAction (mkV "hurt" "hurt" "hurt") a);
+    guard a= (binaryAction (mkV "guard") a);
+    harm a= (binaryAction (mkV "harm") a);
+    disable a= (binaryAction (mkV "disable") a);
+    destroy a= (binaryAction (mkV "destroy") a);
+    injure a= (binaryAction (mkV "injure") a);
+    shoot a= (binaryAction (mkV "shoot" "shot" "shot") a);
 
    -- refrain3 act agent = {verb1 =  (mkV2 "refrain") ; arg=agent.name; verb2= act.verb};
     
-    raining = (mkCl (mkVP (mkV "rain")));
-    snowing = (mkCl (mkVP (mkV "snow")));
+    raining = (nullaryFluent (mkV "rain"));
+    snowing = (nullaryFluent (mkV "snow"));
 
-    hungry agent = (mkCl agent.name  (mkAP (mkA "hungry"))) ;
-    tired agent = (mkCl agent.name  (mkAP (mkA "tired"))) ;
-    sick agent = (mkCl agent.name  (mkAP (mkA "sick"))) ;
-    sad agent = (mkCl agent.name  (mkAP (mkA "sad"))) ;
-    happy agent = (mkCl agent.name  (mkAP (mkA "happy"))) ;
-    angry agent = (mkCl agent.name (mkAP (mkA "angry"))) ;
+    hungry agent = (unaryFluent agent  (mkAP (mkA "hungry"))) ;
+    tired agent = (unaryFluent agent  (mkAP (mkA "tired"))) ;
+    sick agent = (unaryFluent agent  (mkAP (mkA "sick"))) ;
+    sad agent = (unaryFluent agent  (mkAP (mkA "sad"))) ;
+    happy agent = (unaryFluent agent  (mkAP (mkA "happy"))) ;
+    angry agent = (unaryFluent agent (mkAP (mkA "angry"))) ;
 
 
-    laugh_f agent = (activity agent (mkV "laugh"));
-    run_f agent = (activity agent (mkV "run" "ran" "run"));
-    sleep_f agent= (activity agent (mkV "sleep" "slept" "slept"));
-    eat_f agent= (activity agent (mkV "eat" "ate" "eaten"));
+    laugh_f agent = (activityFluent agent (mkV "laugh"));
+    run_f agent = (activityFluent agent (mkV "run" "ran" "run"));
+    sleep_f agent= (activityFluent agent (mkV "sleep" "slept" "slept"));
+    eat_f agent= (activityFluent agent (mkV "eat" "ate" "eaten"));
+    
     oper
-     activity: {descr:NP; name: NP} -> V -> Cl = 
+     activityFluent: {descr:NP; name: NP} -> V -> Cl = 
 	  \agent,verb -> (mkCl agent.name (progressiveVP (mkVP verb)));
+     
+     nullaryFluent: V -> Cl = \verb -> (mkCl (mkVP verb));
+     
+     unaryFluent: {descr:NP; name: NP} -> AP-> Cl = \agent, ap -> (mkCl agent.name ap);
+
+     unaryAction: V -> VP = 
+       \verb -> (mkVP verb);
+
+     binaryAction: V->{descr:NP; name: NP} -> VP = 
+       \verb, agent -> (mkVP (mkV2 verb) agent.name);
 }

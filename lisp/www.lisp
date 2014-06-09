@@ -137,10 +137,11 @@ label-default'>waiting</span>")
 
 (hunchentoot:define-easy-handler (parsegf :uri "/parse") (q)
   (setf (hunchentoot:content-type*) "text/plain")
-  (let ((*print-pretty* nil)) (princ-to-string (postprocess-tree  
-                              (transform-tree 
-                               (pre-transform (first (parse (cl-ppcre:regex-replace "%20" q
-                                                                                    "\\s")))))))))
+  (let ((*print-pretty* nil)) 
+    (string-downcase (princ-to-string (postprocess-tree  
+                                       (transform-tree 
+                                        (pre-transform (first (parse (cl-ppcre:regex-replace "%20" q
+                                                                                             "\\s"))))))))))
 
 (defun surround-by-parens (str) (concatenate 'string "(" str ")"))
 (hunchentoot:define-easy-handler (randomgf :uri "/randomgf") ()

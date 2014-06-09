@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -30,7 +31,7 @@
     <div class="col-md-8 col-md-offset-2">
       <div class="input-group input-group-lg">
   <span class="input-group-addon">&#8866</span>
-  <input id="input" type="text" class="form-control" placeholder="text">
+  <input id="input" speech="speech"  x-webkit-speech x-webkit-speech="x-webkit-speech" type="text" class="form-control" placeholder="text">
 </div>
     </div>
   </div>
@@ -137,6 +138,39 @@ $("#input").keyup(handleSuggest);
 $("#alertBar").slideDown();
 
 suggest();
+
+  var recognition = new webkitSpeechRecognition();
+  recognition.continuous = true;
+  recognition.interimResults = true;
+
+  recognition.onstart = function() {
+    recognizing = true;
+    showInfo('info_speak_now');
+    start_img.src = '/intl/en/chrome/assets/common/images/content/mic-animate.gif';
+  };
+
+  recognition.onerror = function(event) {
+    if (event.error == 'no-speech') {
+      start_img.src = '/intl/en/chrome/assets/common/images/content/mic.gif';
+      showInfo('info_no_speech');
+      ignore_onend = true;
+    }
+    if (event.error == 'audio-capture') {
+      start_img.src = '/intl/en/chrome/assets/common/images/content/mic.gif';
+      showInfo('info_no_microphone');
+      ignore_onend = true;
+    }
+    if (event.error == 'not-allowed') {
+      if (event.timeStamp - start_timestamp < 100) {
+        showInfo('info_blocked');
+      } else {
+        showInfo('info_denied');
+      }
+      ignore_onend = true;
+    }
+  };
+
+
 
 </script>
 

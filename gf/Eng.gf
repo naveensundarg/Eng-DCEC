@@ -1,11 +1,12 @@
 --# -path=.:.:alltenses
-concrete Eng of DCEC = open SyntaxEng, ConstructorsEng, ParadigmsEng in {
+concrete Eng of DCEC =  open SyntaxEng, ConstructorsEng, ParadigmsEng in {
 
   lincat Agent ={descr:NP; name: NP};
-	 ActionType1 = V;
-	 ActionType2 = {verb : V2; arg : NP};
+	 ActionType1 = V; -- X laughs
+	 ActionType2 = {verb : V2; arg : NP}; -- X likes Y
+	 ActionType3 = {verb1 : V2;  verb2: V2;  arg : NP}; -- X refrains from harming Y
 	 Event = Cl;
-	 Boolean = {pol:Pol; tense: Tense; clause: Cl};
+	 Boolean = {pol:Pol; anteriority:Ant; tense: Tense; clause: Cl};
 	 Moment = Tense;
 	 Fluent = Cl;
 	 Utterance = S;
@@ -15,15 +16,17 @@ concrete Eng of DCEC = open SyntaxEng, ConstructorsEng, ParadigmsEng in {
 
   lin
     --
-    s b = (mkS b.tense b.pol b.clause);
+    s b = (mkS b.tense b.anteriority b.pol b.clause);
 
     -- Logic
     and x y = (mkS and_Conj (mkListS x y));
-    and_seq x y = (mkS and_Conj (mkListS x (mkS (mkAdv  "then") y)));
+
+
+    and_seq x y = (mkS and_Conj (mkListS x (mkS (ConstructorsEng.mkAdv  (mkA "then")) y)));
     or x y = (mkS or_Conj (mkListS x y));
     if x y = (mkS if_then_Conj (mkListS x y));
-    not x = (bool x.tense  negativePol x.clause);
-    forall xs A B = (bool presentTense positivePol (mkCl (ConstructorsEng.mkAdv for_Prep (mkNP all_Predet (mkNP a_Quant plNum (mkCN A xs.descr)))) (s B)));
+    not x = (bool x.tense simultaneousAnt negativePol x.clause);
+    forall xs A B = (bool presentTense simultaneousAnt positivePol (mkCl (ConstructorsEng.mkAdv for_Prep (mkNP all_Predet (mkNP a_Quant plNum (mkCN A xs.descr)))) (s B)));
     all xs A  B=  (mkS (ConstructorsEng.mkAdv for_Prep (mkNP all_Predet (mkNP a_Quant plNum (mkCN A xs.descr)))) B);
 	      -- every one 
     -- [Note: not is a bit different as it has to interact with the verb.]
@@ -39,36 +42,41 @@ concrete Eng of DCEC = open SyntaxEng, ConstructorsEng, ParadigmsEng in {
 
     d a t F  = (modal1 (mkV "desire") a t F);
     
-    i1now a t Act  = (intends a t (mkVP Act)(ParadigmsEng.mkAdv "now"));
+    i1now a t Act  = (intends a  t simultaneousAnt (mkVP Act)(ParadigmsEng.mkAdv "now"));
 
-    i1later a t Act = (intends a t (mkVP Act)(ConstructorsEng.mkAdv (mkA "eventual")));
+    i1later a t Act = (intends a  t simultaneousAnt (mkVP Act)(ConstructorsEng.mkAdv (mkA "eventual")));
     
-    i2now a t Act  = (intends a t (mkVP Act.verb Act.arg) (ParadigmsEng.mkAdv "now"));
+    i2now a t Act  = (intends a  t simultaneousAnt (mkVP Act.verb Act.arg) (ParadigmsEng.mkAdv "now"));
 
-    i2later a t Act = (intends a t (mkVP Act.verb Act.arg) (ConstructorsEng.mkAdv (mkA "eventual")));
+    i2later a t Act = (intends a  t simultaneousAnt (mkVP Act.verb Act.arg) (ConstructorsEng.mkAdv (mkA "eventual")));
 
  
     --EC Core
      --action
     action1 agent actiontype = (mkCl agent.name actiontype)  ;
     action2 agent actiontype = (mkCl agent.name actiontype.verb actiontype.arg)  ;
+    action2I agent actiontype = (mkCl agent.name (reflexiveVP actiontype.verb))  ;
+    action3 agent actiontype = (mkCl agent.name actiontype.verb1  (mkNP actiontype.arg actiontype.verb2 ));
+ --   action3I agent actiontype = (mkCl agent.name (reflexiveVP actiontype.verb1) (mkVP actiontype.verb2 actiontype.arg2))  ;
 
     action1c agent actiontype = (mkCl agent.name (progressiveVP (mkVP actiontype)))  ;
     action2c agent actiontype = (mkCl agent.name  (progressiveVP 
 						     (mkVP actiontype.verb actiontype.arg)));
 
+
     -- initially
     --- mkCl:	SC -> VP -> Cl	
-    initially fluent = (bool presentTense positivePol
+    initially fluent = (bool presentTense simultaneousAnt positivePol
 			  (mkCl (mkSC (mkS fluent)) 
 			     (mkVP 
 				(mkVP (mkV "hold")) 
 				(ConstructorsEng.mkAdv (mkA "initial")))));
     --holds
-    holds fluent moment = (bool moment positivePol fluent);
+    holds fluent moment = (bool moment simultaneousAnt positivePol fluent);
 
     -- happens
-    happens event moment = (bool moment positivePol event);
+    happens event moment = (bool moment simultaneousAnt positivePol event);
+   happensp event moment = (bool moment anteriorAnt positivePol event);
 
 
 
@@ -76,7 +84,11 @@ concrete Eng of DCEC = open SyntaxEng, ConstructorsEng, ParadigmsEng in {
     i = {descr = (mkNP (mkN "person")); name = i_NP } ;
     he ref = {descr = (mkNP (mkN "man")); name = he_NP };
     she ref={descr = (mkNP (mkN "woman")); name = she_NP };
+
+    he_p ref = {descr = (mkNP (mkN "man")); name = (mkNP he_Pron) };
+    she_p ref={descr = (mkNP (mkN "woman")); name =(mkNP she_Pron)};
     you = {descr = (mkNP (mkN "person")); name = you_NP };
+
     -- Moments
     now = presentTense;
     tf = futureTense;
@@ -95,22 +107,26 @@ concrete Eng of DCEC = open SyntaxEng, ConstructorsEng, ParadigmsEng in {
       modal1 : 
 	V -> {descr:NP; name: NP} -> Tense -> 
 	S ->
-	{pol:Pol; tense: Tense; clause: Cl} 
+	{pol:Pol; anteriority:Ant; tense: Tense; clause: Cl} 
 	=
 	\verb,a,t,F -> 
-	(bool t positivePol
+	(bool t simultaneousAnt positivePol
 	   (mkCl a.name (mkVP 
 		      (mkVS verb)
 		      F)));
  
       -- construct boolean objects with tense and polarities
-    bool: Tense -> Pol-> Cl-> {pol:Pol; tense: Tense; clause: Cl} =
-      \t, p,cl -> {tense=t; pol=p; clause = cl};
+    bool: Tense -> Ant ->Pol-> Cl-> {pol:Pol; anteriority:Ant; tense: Tense; clause: Cl} =
+      \t,a,p,cl -> {tense=t; anteriority=a; pol=p; clause = cl};
 
 
-    intends: {descr:NP; name: NP}->Tense -> VP -> Adv -> {pol:Pol; tense: Tense; clause: Cl}=
-      \a,t,vp,adv ->
-      (bool t positivePol 
+
+
+
+    intends: {descr:NP; name: NP}->Tense -> Ant -> VP -> Adv -> 
+      {pol:Pol; anteriority:Ant; tense: Tense; clause: Cl}=
+      \a,t, ant, vp,adv ->
+      (bool t ant positivePol 
 	 (mkCl a.name want_VV 
 	    (mkVP vp 
 	       adv)));

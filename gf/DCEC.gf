@@ -24,7 +24,7 @@ abstract DCEC =  {
     d: Agent -> Moment -> Utterance -> Boolean;
     inow: Agent -> Moment -> ActionType -> Boolean;
     ilater: Agent -> Moment -> ActionType -> Boolean;
-
+    
     -- Event Calculus
     action : Agent -> ActionType-> Event ;
     
@@ -37,9 +37,12 @@ abstract DCEC =  {
     --- TODO: Modularize Specific Domains
     -- Agents, ActionTypes, Moments and Fluents
     --- Agents
+  --  self :  Agent-> Agent; 
     i, you : Agent ;
-    he , she : Agent -> Agent;
-    he_p, she_p : Agent -> Agent;
+   -- he , she : Agent -> Agent;
+    he, she,it : Agent -> Agent;
+
+
     --- Moments
     now,tf,tp: Moment;
     

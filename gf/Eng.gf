@@ -1,7 +1,7 @@
 --# -path=.:.:alltenses
 concrete Eng of DCEC =  open SyntaxEng, ConstructorsEng, ParadigmsEng in {
 
-  lincat Agent ={descr:NP; name: NP};
+  lincat Agent ={descr:NP; name: NP; gender:Gender};
 	 ActionType=VP;
 	 Event = Cl;
 	 Boolean = {pol:Pol; anteriority:Ant; tense: Tense; clause: Cl};
@@ -70,13 +70,15 @@ concrete Eng of DCEC =  open SyntaxEng, ConstructorsEng, ParadigmsEng in {
 
 
     -- Agents
-    i = {descr = (mkNP (mkN "person")); name = i_NP } ;
-    he ref = {descr = (mkNP (mkN "man")); name = he_NP };
-    she ref={descr = (mkNP (mkN "woman")); name = she_NP };
+    i = {descr = (mkNP (mkN "person")); name = i_NP ;gender = human } ;
+  --  he ref = {descr = (mkNP (mkN "man")); name = he_NP };
+  --  she ref={descr = (mkNP (mkN "woman")); name = she_NP };
 
-    he_p ref = {descr = (mkNP (mkN "man")); name = (mkNP he_Pron) };
-    she_p ref={descr = (mkNP (mkN "woman")); name =(mkNP she_Pron)};
-    you = {descr = (mkNP (mkN "person")); name = you_NP };
+    he ref = {descr = (mkNP (mkN "man")); name = (mkNP he_Pron); gender= masculine };
+    she ref={descr = (mkNP (mkN "woman")); name =(mkNP she_Pron); gender= feminine};
+    it ref = {descr = (mkNP (mkN "agent")); name = (mkNP it_Pron); gender= masculine };
+
+    you = {descr = (mkNP (mkN "person")); name = you_NP ; gender= masculine};
 
     -- Moments
     now = presentTense;
@@ -85,10 +87,11 @@ concrete Eng of DCEC =  open SyntaxEng, ConstructorsEng, ParadigmsEng in {
 
 
     agent = (mkCN (mkN "agent"));
-    x _ = {descr = (mkNP (mkN "x")); name = (mkNP (mkN "x")) };
-    y _ = {descr = (mkNP (mkN "y")); name = (mkNP (mkN "y")) };
-    z _ = {descr = (mkNP (mkN "z")); name = (mkNP (mkN "z")) };
-     
+    x _ = {descr = (mkNP (mkN "x")); name = (mkNP (mkN "x")) ; gender= masculine};
+    y _ = {descr = (mkNP (mkN "y")); name = (mkNP (mkN "y")) ; gender= masculine};
+    z _ = {descr = (mkNP (mkN "z")); name = (mkNP (mkN "z")) ; gender= masculine};
+    
+    --self x = table {masculine => {descr = (mkNP (mkN "male")); name = (mkNP (mkN "himself")) ; gender= masculine}}!x.gender;
     BaseAgent x =x;
     ConsAgent x xs = mkNP and_Conj (mkListNP x xs);
         oper

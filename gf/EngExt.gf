@@ -5,16 +5,16 @@ concrete EngExt of DCECExt = Eng ** open  SyntaxEng, ConstructorsEng, ParadigmsE
 
     -- Agents and their descriptions
     
-    jack   = {descr = (mkNP (mkN human (mkN "named Jack"))); name = (mkNP (mkN human (mkN "Jack"))) } ;
-    cogito = {descr = (mkNP (mkN "named Cogito")); name = (mkNP (mkN "Cogito")) };
+    jack   = {descr = (mkNP (mkN human (mkN "named Jack"))); name = (mkNP (mkPN "Jack")) ; gender= masculine} ;
+    cogito = {descr = (mkNP (mkN "named Cogito")); name = (mkNP (mkPN "Cogito")); gender= masculine };
 
-    robot_n = {descr = (mkNP (mkN "named N")); name = (mkNP (mkN "N")) };
-    robot_s = {descr = (mkNP (mkN "named S")); name = (mkNP (mkN "S")) };
+    robot_n = {descr = (mkNP (mkN "named N")); name = (mkNP (mkN "N")); gender= masculine};
+    robot_s = {descr = (mkNP (mkN "named S")); name = (mkNP (mkN "S")); gender= masculine };
 
     
-    robot1   = {descr = (mkNP (mkN "named Robot 1")); name = (mkNP (mkN "Robot 1")) } ;
-    robot2 = {descr = (mkNP (mkN "named Robot 2")); name = (mkNP (mkN "Robot 2")) };
-    robot3 = {descr = (mkNP (mkN "named Robot 3")); name = (mkNP (mkN "Robot 3")) };
+    robot1   = {descr = (mkNP (mkN "named Robot 1")); name = (mkNP (mkN "Robot 1")) ; gender= masculine} ;
+    robot2 = {descr = (mkNP (mkN "named Robot 2")); name = (mkNP (mkN "Robot 2")) ; gender= masculine};
+    robot3 = {descr = (mkNP (mkN "named Robot 3")); name = (mkNP (mkN "Robot 3")) ; gender= masculine};
 
 
 
@@ -52,16 +52,16 @@ concrete EngExt of DCECExt = Eng ** open  SyntaxEng, ConstructorsEng, ParadigmsE
     eat_f agent= (activityFluent agent (mkV "eat" "ate" "eaten"));
     
     oper
-     activityFluent: {descr:NP; name: NP} -> V -> Cl = 
+     activityFluent: {descr:NP; name: NP; gender: Gender} -> V -> Cl = 
 	  \agent,verb -> (mkCl agent.name (progressiveVP (mkVP verb)));
      
      nullaryFluent: V -> Cl = \verb -> (mkCl (mkVP verb));
      
-     unaryFluent: {descr:NP; name: NP} -> AP-> Cl = \agent, ap -> (mkCl agent.name ap);
+     unaryFluent: {descr:NP; name: NP; gender: Gender} -> AP-> Cl = \agent, ap -> (mkCl agent.name ap);
 
      unaryAction: V -> VP = 
        \verb -> (mkVP verb);
 
-     binaryAction: V->{descr:NP; name: NP} -> VP = 
-       \verb, agent -> (mkVP (mkV2 verb) agent.name);
+     binaryAction: V->{descr:NP; name: NP; gender: Gender} -> VP = 
+       \verb, agent -> (mkVP (mkV2 verb) agent.name) | (reflexiveVP (mkV2 verb));
 }

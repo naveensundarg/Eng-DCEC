@@ -3,7 +3,7 @@ abstract DCEC =  {
   flags startcat = Utterance ;
 	
   cat  Agent; ActionType; Event; Moment; Boolean; Fluent;Utterance;
-         Dom; 
+         Dom; Object;
   fun
     
     -- Top 

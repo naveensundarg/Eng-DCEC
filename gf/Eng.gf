@@ -2,6 +2,7 @@
 concrete Eng of DCEC =  open SyntaxEng, ConstructorsEng, ParadigmsEng in {
 
   lincat Agent ={descr:NP; name: NP; gender:Gender};
+	 Object = {descr:NP; name: NP; gender:Gender};
 	 ActionType=VP;
 	 Event = Cl;
 	 Boolean = {pol:Pol; anteriority:Ant; tense: Tense; clause: Cl};

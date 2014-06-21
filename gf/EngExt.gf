@@ -1,6 +1,6 @@
 concrete EngExt of DCECExt = Eng ** open  SyntaxEng, ConstructorsEng, ParadigmsEng in {
 
-      --- *** Domain Specific ***
+      --  *** Domain Specific ***
     lin
 
     -- Agents and their descriptions

@@ -133,13 +133,7 @@ concrete Eng of DCEC =  open SyntaxEng, ConstructorsEng, ParadigmsEng in {
 
     EntityLinType: Type = {descr:NP; name: NP;};
 
-       artIndef = pre {
-      "eu" | "Eu" | "uni" | "up" => "a" ;
-      "un" => "an" ; 
-      "a" | "e" | "i" | "o" | "A" | "E" | "I" | "O" => "an" ;
-      "SMS" | "sms" => "an" ; ---
-      _ => "a"
-      } ;
+
 
 }
 

@@ -36,6 +36,7 @@ concrete EngExt of DCECExt = Eng ** open  SyntaxEng, ConstructorsEng, ParadigmsE
     injure a= (binaryAction (mkV "injure") a);
     shoot a= (binaryAction (mkV "shoot" "shot" "shot") a);
     eat2 obj = (binaryAction (mkV "eat" "ate" "eaten") obj);
+    read2 obj = (binaryAction (mkV "read" "read" "read") obj);
 
    -- refrain3 act agent = {verb1 =  (mkV2 "refrain") ; arg=agent.name; verb2= act.verb};
     
@@ -55,6 +56,8 @@ concrete EngExt of DCECExt = Eng ** open  SyntaxEng, ConstructorsEng, ParadigmsE
     sleep_f agent= (activityFluent agent (mkV "sleep" "slept" "slept"));
     eat_f agent= (activityFluent agent (mkV "eat" "ate" "eaten"));
     
+
+    continuous agent action = (mkCl agent.name (progressiveVP action));
     oper
      activityFluent: {descr:NP; name: NP; gender: Gender} -> V -> Cl = 
 	  \agent,verb -> (mkCl agent.name (progressiveVP (mkVP verb)));

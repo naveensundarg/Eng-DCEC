@@ -17,6 +17,9 @@ concrete EngExt of DCECExt = Eng ** open  SyntaxEng, ConstructorsEng, ParadigmsE
     robot3 = {descr = (mkNP (mkN "named Robot 3")); name = (mkNP (mkN "Robot 3")) ; gender= masculine};
 
 
+    -- classes
+    apple = {name = (mkN "apple"); indef = (mkN "an apple")};
+    book = {name =  (mkN "book"); indef = (mkN "a book")};
 
     -- Unary ActionTypes
     laugh = (unaryAction (mkV "laugh" "laughed" "laughed"));
@@ -32,6 +35,7 @@ concrete EngExt of DCECExt = Eng ** open  SyntaxEng, ConstructorsEng, ParadigmsE
     destroy a= (binaryAction (mkV "destroy") a);
     injure a= (binaryAction (mkV "injure") a);
     shoot a= (binaryAction (mkV "shoot" "shot" "shot") a);
+    eat2 obj = (binaryAction (mkV "eat" "ate" "eaten") obj);
 
    -- refrain3 act agent = {verb1 =  (mkV2 "refrain") ; arg=agent.name; verb2= act.verb};
     
@@ -44,7 +48,7 @@ concrete EngExt of DCECExt = Eng ** open  SyntaxEng, ConstructorsEng, ParadigmsE
     sad agent = (unaryFluent agent  (mkAP (mkA "sad"))) ;
     happy agent = (unaryFluent agent  (mkAP (mkA "happy"))) ;
     angry agent = (unaryFluent agent (mkAP (mkA "angry"))) ;
-
+    
 
     laugh_f agent = (activityFluent agent (mkV "laugh"));
     run_f agent = (activityFluent agent (mkV "run" "ran" "run"));
@@ -57,11 +61,11 @@ concrete EngExt of DCECExt = Eng ** open  SyntaxEng, ConstructorsEng, ParadigmsE
      
      nullaryFluent: V -> Cl = \verb -> (mkCl (mkVP verb));
      
-     unaryFluent: {descr:NP; name: NP; gender: Gender} -> AP-> Cl = \agent, ap -> (mkCl agent.name ap);
+     unaryFluent: EntityLinType -> AP-> Cl = \agent, ap -> (mkCl agent.name ap);
 
      unaryAction: V -> VP = 
        \verb -> (mkVP verb);
 
-     binaryAction: V->{descr:NP; name: NP; gender: Gender} -> VP = 
-       \verb, agent -> (mkVP (mkV2 verb) agent.name) | (reflexiveVP (mkV2 verb));
+     binaryAction: V->EntityLinType -> VP = 
+       \verb, entity -> (mkVP (mkV2 verb)entity.name) | (reflexiveVP (mkV2 verb));
 }

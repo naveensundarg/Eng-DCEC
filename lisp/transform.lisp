@@ -70,10 +70,10 @@
          `(and ,@(rest x) (< x1 x2))))
     ;; simple past
     ((list 'happens (list 'action ag act) 'tp)
-     (simple-past ag act))
+     (make-simple-past ag act))
     ;; simple future
     ((list 'happens (list 'action ag act) 'tf)
-     (simple-future ag act))
+     (make-simple-future ag act))
     ((cons head args) (cons head (mapcar #'transform-tree-int args)))
     (_ (values x (symbol-package x)))))
 

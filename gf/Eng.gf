@@ -11,13 +11,17 @@ concrete Eng of DCEC =  open SyntaxEng, ConstructorsEng, ParadigmsEng in {
 	 Boolean = {pol:Pol; anteriority:Ant; tense: Tense; clause: Cl};
 	 Moment = Tense;
 	 Fluent = Cl;
-	 Utterance = S;
+	 Sentence = S;
 	 Dom= CN;
-
+	 Query = QS;
+	 Utterance = Utt;
 
   lin
     --
-    s b = (mkS b.tense b.anteriority b.pol b.clause);
+    u1 s = (mkUtt s);
+    u2 b = (mkS b.tense b.anteriority b.pol b.clause);
+	
+    justify b = (mkUtt (mkQS b.tense b.anteriority b.pol (mkQCl why_IAdv b.clause)));
 
     -- Logic
     and x y = (mkS and_Conj (mkListS x y));
@@ -26,12 +30,14 @@ concrete Eng of DCEC =  open SyntaxEng, ConstructorsEng, ParadigmsEng in {
     and_seq x y = (mkS and_Conj (mkListS x (mkS (ConstructorsEng.mkAdv  (mkA "then")) y)));
 
     or x y = (mkS or_Conj (mkListS x y));
-
+    
+    ss x y = (mkS if_then_Conj (mkListS (mkS  x.tense x.anteriority x.pol x.clause)
+                                  (mkS conditionalTense y.anteriority y.pol y.clause)));
     if x y = (mkS if_then_Conj (mkListS x y));
 
     not x = (bool x.tense simultaneousAnt negativePol x.clause);
 
-    forall xs A B = (bool presentTense simultaneousAnt positivePol (mkCl (ConstructorsEng.mkAdv for_Prep (mkNP all_Predet (mkNP a_Quant plNum (mkCN A xs.descr)))) (s B)));
+    forall xs A B = (bool presentTense simultaneousAnt positivePol (mkCl (ConstructorsEng.mkAdv for_Prep (mkNP all_Predet (mkNP a_Quant plNum (mkCN A xs.descr)))) (u2 B)));
     all xs A  B=  (mkS (ConstructorsEng.mkAdv for_Prep (mkNP all_Predet (mkNP a_Quant plNum (mkCN A xs.descr)))) B);
 	      -- every one 
     -- [Note: not is a bit different as it has to interact with the verb.]
@@ -50,8 +56,9 @@ concrete Eng of DCEC =  open SyntaxEng, ConstructorsEng, ParadigmsEng in {
     inow a t Act  = (intends a  t simultaneousAnt Act (ParadigmsEng.mkAdv "now"));
 
     ilater a t Act = (intends a  t simultaneousAnt Act (ConstructorsEng.mkAdv (mkA "eventual")));
-    
- 
+    ought a t P Ob =  (mkS if_then_Conj (mkListS P  (must a t simultaneousAnt Ob positivePol)));
+    ought_refrain a t P Ob =  (mkS if_then_Conj (mkListS P  (must a t simultaneousAnt Ob negativePol)));
+
     --EC Core
      --action
     action agent actiontype = (mkCl agent.name actiontype)  ;
@@ -130,6 +137,17 @@ concrete Eng of DCEC =  open SyntaxEng, ConstructorsEng, ParadigmsEng in {
 	 (mkCl a.name want_VV 
 	    (mkVP vp 
 	       adv)));
+
+
+    must: {descr:NP; name: NP}->Tense -> Ant -> VP  -> Pol->
+      S=
+      \a,t, ant, vp,pol ->
+       (b2s (bool t ant pol 
+	       (mkCl a.name must_VV 
+		   vp)));
+
+    b2s: {pol:Pol; anteriority:Ant; tense: Tense; clause: Cl}->S=
+      \b -> (mkS b.tense b.anteriority b.pol b.clause);
 
     EntityLinType: Type = {descr:NP; name: NP;};
 

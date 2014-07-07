@@ -30,6 +30,7 @@ concrete EngExt of DCECExt = Eng ** open  SyntaxEng, ConstructorsEng, ParadigmsE
     -- Binary ActionTypes
     hurt a= (binaryAction (mkV "hurt" "hurt" "hurt") a);
     guard a= (binaryAction (mkV "guard") a);
+    kick a= (binaryAction (mkV "kick") a);
     harm a= (binaryAction (mkV "harm") a);
     disable a= (binaryAction (mkV "disable") a);
     destroy a= (binaryAction (mkV "destroy") a);
@@ -56,6 +57,7 @@ concrete EngExt of DCECExt = Eng ** open  SyntaxEng, ConstructorsEng, ParadigmsE
     sleep_f agent= (activityFluent agent (mkV "sleep" "slept" "slept"));
     eat_f agent= (activityFluent agent (mkV "eat" "ate" "eaten"));
     
+    custody a1 a2 =binaryFluent a1 a2 (mkV2 "guard");
 
     continuous agent action = (mkCl agent.name (progressiveVP action));
     oper
@@ -65,7 +67,10 @@ concrete EngExt of DCECExt = Eng ** open  SyntaxEng, ConstructorsEng, ParadigmsE
      nullaryFluent: V -> Cl = \verb -> (mkCl (mkVP verb));
      
      unaryFluent: EntityLinType -> AP-> Cl = \agent, ap -> (mkCl agent.name ap);
+     binaryFluent: EntityLinType -> EntityLinType-> V2-> Cl = \agent1, agent2,v -> (mkCl agent1.name (progressiveVP (mkVP v agent2.name)));
 
+
+     
      unaryAction: V -> VP = 
        \verb -> (mkVP verb);
 

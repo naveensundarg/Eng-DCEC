@@ -31,7 +31,7 @@
     <div class="col-md-8 col-md-offset-2">
       <div class="input-group input-group-lg">
   <span class="input-group-addon">&#8866</span>
-  <input id="input" speech="speech"  x-webkit-speech x-webkit-speech="x-webkit-speech" type="text" class="form-control" placeholder="text">
+  <input id="input"  onchange="handleSuggest()" speech="speech"  x-webkit-speech x-webkit-speech="x-webkit-speech" type="text" class="form-control" placeholder="text">
 </div>
     </div>
   </div>
@@ -133,6 +133,19 @@ function handleSuggest (e){
    cached= $("#input").val();
   
 }
+
+function autoSuggest (){
+
+   console.log( "Handler for .keypress() called." );
+   if($("#input").val()==cached) {return;}
+    $('[data-toggle="popover"]').popover('hide');
+
+   suggest();
+   cached= $("#input").val();
+  
+}
+
+setInterval("autoSuggest()", 500);
 
 $("#input").keyup(handleSuggest);
 $("#alertBar").slideDown();

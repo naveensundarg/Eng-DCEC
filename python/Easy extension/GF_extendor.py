@@ -1,7 +1,6 @@
 import os
 import re
 
-
 #Find index number of where to append in DCECExt.txt
 def findDCECExtLoc(string) :	
 	f = open("DCECExt_o.gf", "r")

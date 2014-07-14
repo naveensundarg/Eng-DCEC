@@ -1,6 +1,4 @@
 import time
-start_time = time.time()
-
 import os
 import re
 from bisect import bisect_left
@@ -356,6 +354,3 @@ inject_linearizations(EngExt_linearizations)
 
 DCEC_labels = make_DCEC_labels(injection)
 inject_labels(DCEC_labels)
-
-print "Done :)"
-print("--- %s seconds ---" % str(time.time() - start_time))

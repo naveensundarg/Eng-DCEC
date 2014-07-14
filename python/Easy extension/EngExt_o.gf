@@ -76,4 +76,5 @@ concrete EngExt of DCECExt = Eng ** open  SyntaxEng, ConstructorsEng, ParadigmsE
 
      binaryAction: V->EntityLinType -> VP = 
        \verb, entity -> (mkVP (mkV2 verb)entity.name) | (reflexiveVP (mkV2 verb));
+       
 }

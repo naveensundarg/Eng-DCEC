@@ -13,4 +13,4 @@ If you are using sentences, delimit the end of each sentence with "."
 
 4. Replace original DCECExt.gf and EngExt.gf in gf folder with newly created DCECExt.gf and EngExt.gf
 
-5. Compile GF Files
+5. Compile GF Files 

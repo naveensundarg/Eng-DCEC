@@ -27,4 +27,5 @@ abstract DCECExt = DCEC  ** {
     apple, book : Class;
 
 
+
 }

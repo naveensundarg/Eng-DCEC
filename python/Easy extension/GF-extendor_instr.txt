@@ -5,7 +5,8 @@ As of now, GF_exendor only supports adding one type of words at a time (do not t
 To use GF_extendor:
 
 1. Add words to input.txt with fomat word1,word2,word3,... (do not forget final comma after last word) 
-	i.e. (to add agents) copy agents.txt to input.txt
+
+1a. In "Word copies/Extendor copies" subdirectory, prearranged text files contain lists of words separated by type
 
 2. Run GF_exendor.py with respective word type 
 

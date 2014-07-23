@@ -155,6 +155,7 @@ label-default'>waiting</span>")
                                              ground)
                                             (length ground)))
                                     (length ground)))))
+
 (hunchentoot:define-easy-handler (computeScore :uri "/computeScore") (x y)
   (setf (hunchentoot:content-type*) "text/plain")
   (scoreSentence x y))

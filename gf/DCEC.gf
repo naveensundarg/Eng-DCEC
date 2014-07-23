@@ -11,11 +11,11 @@ abstract DCEC =  {
     u2 : Boolean -> Sentence;
     justify: Boolean -> Utterance;
     -- Logic
-     and : Sentence -> Sentence -> Sentence; 
-     and_seq: Sentence -> Sentence -> Sentence;
+     and : Utterance -> Utterance -> Sentence; 
+     and_seq: Utterance -> Utterance -> Sentence;
      ss : Boolean -> Boolean -> Sentence; 
-     if : Sentence -> Sentence -> Sentence; 
-     or : Sentence -> Sentence -> Sentence; 
+     if : Utterance -> Utterance -> Sentence; 
+     or : Utterance -> Utterance -> Sentence; 
      not: Boolean -> Boolean;
      forall : Agent -> Dom -> Boolean -> Boolean;
      all : Agent -> Dom -> Sentence -> Sentence;
@@ -46,8 +46,8 @@ abstract DCEC =  {
     i, you : Agent ;
    -- he , she : Agent -> Agent;
     he, she,it : Agent -> Agent;
-
-
+    we: Agent -> Agent;
+    they: Agent -> Agent; 
     --- Moments
     now,tf,tp: Moment;
     

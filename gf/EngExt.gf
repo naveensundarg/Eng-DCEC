@@ -7,7 +7,7 @@ concrete EngExt of DCECExt = Eng ** open  SyntaxEng, ConstructorsEng, ParadigmsE
     
     jack   = {descr = (mkNP (mkN human (mkN "named Jack"))); name = (mkNP (mkPN "Jack")) ; gender= masculine} ;
     cogito = {descr = (mkNP (mkN "named Cogito")); name = (mkNP (mkPN "Cogito")); gender= masculine };
-
+    
     robot_n = {descr = (mkNP (mkN "named N")); name = (mkNP (mkN "N")); gender= masculine};
     robot_s = {descr = (mkNP (mkN "named S")); name = (mkNP (mkN "S")); gender= masculine };
 
@@ -15,6 +15,8 @@ concrete EngExt of DCECExt = Eng ** open  SyntaxEng, ConstructorsEng, ParadigmsE
     robot1   = {descr = (mkNP (mkN "named Robot 1")); name = (mkNP (mkN "Robot 1")) ; gender= masculine} ;
     robot2 = {descr = (mkNP (mkN "named Robot 2")); name = (mkNP (mkN "Robot 2")) ; gender= masculine};
     robot3 = {descr = (mkNP (mkN "named Robot 3")); name = (mkNP (mkN "Robot 3")) ; gender= masculine};
+
+    ibm = {descr = (mkNP (mkN "entity named IBM")); name = (mkNP (mkPN "IBM")); gender= masculine };
 
 
     -- classes
@@ -38,6 +40,8 @@ concrete EngExt of DCECExt = Eng ** open  SyntaxEng, ConstructorsEng, ParadigmsE
     shoot a= (binaryAction (mkV "shoot" "shot" "shot") a);
     eat2 obj = (binaryAction (mkV "eat" "ate" "eaten") obj);
     read2 obj = (binaryAction (mkV "read" "read" "read") obj);
+
+    acquire obj = (binaryAction (mkV "acquire") obj);
 
    -- refrain3 act agent = {verb1 =  (mkV2 "refrain") ; arg=agent.name; verb2= act.verb};
     

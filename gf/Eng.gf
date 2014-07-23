@@ -94,7 +94,10 @@ concrete Eng of DCEC =  open SyntaxEng, ConstructorsEng, ParadigmsEng in {
     he ref = {descr = (mkNP (mkN "man")); name = (mkNP he_Pron); gender= masculine };
     she ref={descr = (mkNP (mkN "woman")); name =(mkNP she_Pron); gender= feminine};
     it ref = {descr = (mkNP (mkN "agent")); name = (mkNP it_Pron); gender= masculine };
-
+    
+    we ref = {descr = (mkNP (mkN "agent")); name = (mkNP we_Pron); gender= masculine };
+    they ref = {descr = (mkNP (mkN "agent")); name = (mkNP they_Pron); gender= masculine };
+	
     you = {descr = (mkNP (mkN "person")); name = you_NP ; gender= masculine};
 
     -- Moments

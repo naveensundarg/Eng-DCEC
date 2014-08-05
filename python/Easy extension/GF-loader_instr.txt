@@ -1,0 +1,16 @@
+GF loader is designed to automatically add words to the lexicon that the GF files uses. 
+
+
+To do so:
+
+1. move the text files in "Word Copies/Loader copies" to the GF_package directory 
+(or wherever loader.py, input.txt, DECEExt_o.gf, and EngExt_o.gf)
+
+2. Put any words into input.txt and at least one "." at the end. 
+If you are using sentences, delimit the end of each sentence with "."
+
+3. Run loader.py: DCECExt.gf and EngExt.gf will be created
+
+4. Replace original DCECExt.gf and EngExt.gf in gf folder with newly created DCECExt.gf and EngExt.gf
+
+5. Compile GF Files 

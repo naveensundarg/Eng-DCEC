@@ -16,7 +16,8 @@
 (defun parse (str)
   (let ((obj (talk-to-gf-server 
                (+s "parse&input="
-                   (cl-ppcre:regex-replace-all "\\s" str "%20")))))
+                   (cl-ppcre:regex-replace-all "\\s" str "%20")
+		   "&cat=Utterance"))))
     (let ((*package* (find-package "ENG-DCEC"))) 
       (mapcar (lambda (x)
                 (read-from-string
@@ -30,7 +31,8 @@
 
 (defun complete (str)
   (let ((obj (talk-to-gf-server (+s "complete&input="
-                                    (cl-ppcre:regex-replace-all "\\s" str "%20")) )))
+                                    (cl-ppcre:regex-replace-all "\\s" str "%20")
+				    "&cat=Utterance"))))
     (gethash "completions" obj)))
 
 (defun linearize (str)
